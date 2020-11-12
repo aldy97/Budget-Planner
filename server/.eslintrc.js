@@ -33,6 +33,7 @@ module.exports = {
     'max-statements-per-line': 'error',
     'member-ordering': 'off',
     'new-parens': 'error',
+    'no-console': 'warn',
     'no-bitwise': 'error',
     'no-caller': 'error',
     'no-cond-assign': 'error',
