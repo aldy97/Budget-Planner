@@ -1,14 +1,16 @@
-import express, { Response, Request } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
+import * as constants from './util/constants';
+
+import db from './db.config';
 
 const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'test' });
-});
+db.connect();
 
-app.listen(7001, () => {
-  console.log('server is running on 7001');
+app.listen(constants.DEFAULT_PORT, () => {
+  console.log(`server is running on ${constants.DEFAULT_PORT}`);
 });

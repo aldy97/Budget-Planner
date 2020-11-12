@@ -22,6 +22,6 @@ module.exports = {
     "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "no-console": "off",
+    "no-console": "warn",
   },
 };
