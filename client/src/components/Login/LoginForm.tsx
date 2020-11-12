@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Checkbox } from "antd";
+import axios from "axios";
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -11,6 +12,8 @@ export const StyledForm = styled(Form)`
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleLoginBtnClick = () => {
     console.log([email, password]);

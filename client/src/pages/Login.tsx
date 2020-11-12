@@ -5,6 +5,7 @@ import RegisterFrom from "../components/Login/RegisterForm";
 
 function Login() {
   const [isAtLogin, setIsAtLogin] = useState<boolean>(true);
+
   const toogle = () => {
     if (isAtLogin) {
       setIsAtLogin(false);
