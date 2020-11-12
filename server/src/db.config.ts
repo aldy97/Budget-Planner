@@ -25,8 +25,8 @@ const connect = (): Mongoose => {
   });
 
   // connection failed
-  mongoose.connection.on('error', err => {
-    console.log('db connection failed!');
+  mongoose.connection.on('error', (err: any) => {
+    console.log('db connection failed: ', err);
   });
 
   // return mongoose instance

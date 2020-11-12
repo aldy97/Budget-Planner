@@ -3,7 +3,7 @@ import { IUser, User, UserDocument } from '../model/User';
 import validator from 'validator';
 import { MESSAGES } from '../util/constants';
 
-export const checkRegister = async (request: Request, response: Response) => {
+const checkRegister = async (request: Request, response: Response) => {
   const { name, password, email }: IUser = request.body;
   const confirmPassword: string = request.body.confirmPassword;
 
@@ -50,3 +50,5 @@ export const checkRegister = async (request: Request, response: Response) => {
 
   response.send(200).send('Registration Succ');
 };
+
+export default checkRegister;

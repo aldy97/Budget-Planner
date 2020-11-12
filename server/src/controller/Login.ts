@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { MESSAGES } from '../util/constants';
 import { UserDocument, User } from '../model/User';
 
-export const checkLogin = async (request: Request, response: Response) => {
+const checkLogin = async (request: Request, response: Response) => {
   const { email, password } = request.body;
   if (!email) {
     response.status(400).send(MESSAGES.EMPTY_EMAIL);
@@ -22,3 +22,5 @@ export const checkLogin = async (request: Request, response: Response) => {
   }
   // TODO: send auth token
 };
+
+export default checkLogin;
