@@ -19,14 +19,14 @@ const connect = (): Mongoose => {
     useUnifiedTopology: true,
   });
 
-  // connection failed
-  mongoose.connection.on('error', err => {
-    console.log('db connection failed!');
-  });
-
   // connection successful
   mongoose.connection.once('open', () => {
     console.log('db connection successful!');
+  });
+
+  // connection failed
+  mongoose.connection.on('error', err => {
+    console.log('db connection failed!');
   });
 
   // return mongoose instance
