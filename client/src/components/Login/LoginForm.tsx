@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Form, Input, Button, Checkbox } from "antd";
 
-const StyledForm = styled(Form)`
+export const StyledForm = styled(Form)`
   width: 360px;
-  margin-top: 100px;
   margin-left: auto;
   margin-right: auto;
 `;
