@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { StyledForm } from "./LoginForm";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 function RegisterFrom() {
+  const [isRegistered, setIsRegistered] = useState(false);
+
   const [email, setEmail] = useState("");
 
   const [name, setName] = useState("");
@@ -11,14 +14,6 @@ function RegisterFrom() {
   const [password, setPassword] = useState("");
 
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
@@ -46,18 +41,14 @@ function RegisterFrom() {
     const response = await axios.post(`/api/register`, request);
     if (response.data === "OK") {
       message.success("Registration Success!");
+      setIsRegistered(true);
     } else {
       message.error(response.data);
     }
   };
 
-  return (
-    <StyledForm
-      name="basic"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+  return !isRegistered ? (
+    <StyledForm name="basic" initialValues={{ remember: true }}>
       <Form.Item rules={[{ required: true, message: "Please input your email!" }]}>
         <Input onChange={handleEmailChange} placeholder="Email:" />
       </Form.Item>
@@ -92,6 +83,8 @@ function RegisterFrom() {
         </Button>
       </Form.Item>
     </StyledForm>
+  ) : (
+    <Redirect to="/home"></Redirect>
   );
 }
 
