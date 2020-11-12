@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -15,8 +16,16 @@ function LoginForm() {
 
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleLoginBtnClick = () => {
-    console.log([email, password]);
+  const handleLoginBtnClick = async () => {
+    const request = { email, password };
+    const response = await axios.post("/api/login", request);
+    console.log(response);
+    if (response.data === "Login success") {
+      message.success("Login success!");
+      setIsLogin(true);
+    } else {
+      message.error(response.data);
+    }
   };
 
   const handleEmailChange = (e: any) => {
@@ -35,7 +44,7 @@ function LoginForm() {
     console.log("Failed:", errorInfo);
   };
 
-  return (
+  return !isLogin ? (
     <StyledForm
       name="basic"
       initialValues={{ remember: true }}
@@ -67,6 +76,8 @@ function LoginForm() {
         </Button>
       </Form.Item>
     </StyledForm>
+  ) : (
+    <Redirect to="/home"></Redirect>
   );
 }
 
