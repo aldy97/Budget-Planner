@@ -6,8 +6,9 @@ import { ServerError } from '../../util/utils';
 import { AugmentedRequest } from 'global';
 
 const createRecord = async (req: AugmentedRequest, res: Response) => {
+  console.log(req.body);
   const title: string = req.body.title ? req.body.title : 'No title';
-  const user: ObjectId = req.verifiedUser._id;
+  const user: ObjectId = req.body.user;
   const type: string = req.body.type;
   const category: string = req.body.category;
   const amount: number = req.body.amount;
