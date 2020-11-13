@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import { UPDATE_USER_EMAIL, UpdateEmail } from "../../actions/HomeAction";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -10,20 +13,22 @@ export const StyledForm = styled(Form)`
   margin-right: auto;
 `;
 
-function LoginForm() {
+interface LoginFormProps {
+  updateEmail?: any;
+}
+
+function LoginForm({ updateEmail }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [isLogin, setIsLogin] = useState(false);
-
-  const [routerPath, setRouterPath] = useState("");
 
   const handleLoginBtnClick = async () => {
     const request = { email, password };
     const response = await axios.post("/api/login", request);
     if (response.data === "Login success") {
       message.success("Login success!");
-      setRouterPath(`/home/${email}`);
+      updateEmail(email);
       setIsLogin(true);
     } else {
       message.error(response.data);
@@ -66,8 +71,17 @@ function LoginForm() {
       </Form.Item>
     </StyledForm>
   ) : (
-    <Redirect to={routerPath}></Redirect>
+    <Redirect to="/home"></Redirect>
   );
 }
 
-export default LoginForm;
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    updateEmail(email: string) {
+      const action: UpdateEmail = { type: UPDATE_USER_EMAIL, email };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatch)(LoginForm);
