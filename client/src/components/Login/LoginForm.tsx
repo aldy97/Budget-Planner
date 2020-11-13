@@ -36,21 +36,8 @@ function LoginForm() {
     setPassword(e.target.value);
   };
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
-
   return !isLogin ? (
-    <StyledForm
-      name="basic"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+    <StyledForm name="basic" initialValues={{ remember: true }}>
       <Form.Item rules={[{ required: true, message: "Please input your email!" }]}>
         <Input onChange={handleEmailChange} placeholder="Email:" />
       </Form.Item>
