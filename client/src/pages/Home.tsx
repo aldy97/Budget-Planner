@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import { DesktopOutlined, PieChartOutlined, FileOutlined } from "@ant-design/icons";
+import {
+  LineChartOutlined,
+  PieChartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const email = window.location.href.split("/")[4];
 
 function Home() {
   const { Header, Content, Footer, Sider } = Layout;
-  const { SubMenu } = Menu;
+
   const [collapsed, setCollapsed] = useState(false);
+
   const toggle = () => {
     setCollapsed(!collapsed);
   };
@@ -15,21 +20,21 @@ function Home() {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
-        <div className="logo" />
+        <div className="logo"></div>
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
+            Overview
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
+          <Menu.Item key="2" icon={<LineChartOutlined />}>
+            Diagram
           </Menu.Item>
-          <Menu.Item key="9" icon={<FileOutlined />}>
-            Files
+          <Menu.Item key="9" icon={<UserOutlined />}>
+            My Account
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }}>
+        <Header className="site-layout-background" style={{ paddingLeft: 24 }}>
           <div>{email}</div>
         </Header>
         <Content style={{ margin: "0 16px" }}>
