@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Route path="/" exact component={() => <Login></Login>}></Route>
-        <Route path="/home" exact component={() => <Home></Home>}></Route>
+        <Route path="/home/:email" exact component={() => <Home></Home>}></Route>
       </BrowserRouter>
     </Provider>
   );

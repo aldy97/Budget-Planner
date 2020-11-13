@@ -16,12 +16,14 @@ function LoginForm() {
 
   const [isLogin, setIsLogin] = useState(false);
 
+  const [routerPath, setRouterPath] = useState("");
+
   const handleLoginBtnClick = async () => {
     const request = { email, password };
     const response = await axios.post("/api/login", request);
-    console.log(response);
     if (response.data === "Login success") {
       message.success("Login success!");
+      setRouterPath(`/home/${email}`);
       setIsLogin(true);
     } else {
       message.error(response.data);
@@ -64,7 +66,7 @@ function LoginForm() {
       </Form.Item>
     </StyledForm>
   ) : (
-    <Redirect to="/home"></Redirect>
+    <Redirect to={routerPath}></Redirect>
   );
 }
 
