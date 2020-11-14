@@ -3,8 +3,15 @@ import { StyledForm } from "./LoginForm";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import { UPDATE_USER_EMAIL, UpdateEmail } from "../../actions/HomeAction";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-function RegisterFrom() {
+interface RegisterFormProps {
+  updateEmail?: any;
+}
+
+function RegisterFrom({ updateEmail }: RegisterFormProps) {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -41,6 +48,7 @@ function RegisterFrom() {
     const response = await axios.post(`/api/register`, request);
     if (response.data === "OK") {
       message.success("Registration Success!");
+      updateEmail(email);
       setIsRegistered(true);
     } else {
       message.error(response.data);
@@ -84,8 +92,17 @@ function RegisterFrom() {
       </Form.Item>
     </StyledForm>
   ) : (
-    <Redirect to="/home"></Redirect>
+    <Redirect to="/overview"></Redirect>
   );
 }
 
-export default RegisterFrom;
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    updateEmail(email: string) {
+      const action: UpdateEmail = { type: UPDATE_USER_EMAIL, email };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatch)(RegisterFrom);
