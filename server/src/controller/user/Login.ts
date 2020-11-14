@@ -20,9 +20,8 @@ const checkLogin = async (request: Request, response: Response) => {
   if (!user) {
     response.send(MESSAGES.WRONG_CREDENTIALS);
   } else {
-    response.status(200).send('Login success');
+    response.send(user._id);
   }
-  // TODO: send auth token
 };
 
 export default checkLogin;
