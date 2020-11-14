@@ -17,9 +17,18 @@ function SideMenu({ selected }: MenuProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [path, setPath] = useState("");
 
+  const UrlParam = window.location.href.split("/")[3];
+
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+
+  const handleMenuItemClick = (route: string) => {
+    if (UrlParam !== route) {
+      setPath(`/${route}`);
+    }
+  };
+
   return !path ? (
     <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
       <div className="logo"></div>
@@ -28,7 +37,7 @@ function SideMenu({ selected }: MenuProps) {
           key="1"
           icon={<PieChartOutlined />}
           onClick={() => {
-            setPath("/overview");
+            handleMenuItemClick("overview");
           }}
         >
           Overview
@@ -37,7 +46,7 @@ function SideMenu({ selected }: MenuProps) {
           key="2"
           icon={<LineChartOutlined />}
           onClick={() => {
-            setPath("/diagram");
+            handleMenuItemClick("diagram");
           }}
         >
           Diagram
@@ -46,7 +55,7 @@ function SideMenu({ selected }: MenuProps) {
           key="3"
           icon={<ProfileOutlined />}
           onClick={() => {
-            setPath("/history");
+            handleMenuItemClick("history");
           }}
         >
           History
@@ -55,7 +64,7 @@ function SideMenu({ selected }: MenuProps) {
           key="4"
           icon={<UserOutlined />}
           onClick={() => {
-            setPath("/account");
+            handleMenuItemClick("account");
           }}
         >
           My Account

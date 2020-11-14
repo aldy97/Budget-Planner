@@ -19,6 +19,7 @@ export const MESSAGES = {
   USER_ID_NOT_FOUND: 'User id does not exist.',
   USER_ID_NOT_PROVIDED: 'Please provide user id.',
   WRONG_CREDENTIALS: 'Email or password is wrong.',
+  NO_RECODS_FOUND: 'No matching records.',
 };
 
 export const MONGODB = 'mongodb://localhost:27017/db';
