@@ -71,7 +71,7 @@ function LoginForm({ updateEmail }: LoginFormProps) {
       </Form.Item>
     </StyledForm>
   ) : (
-    <Redirect to="/home"></Redirect>
+    <Redirect to="/overview"></Redirect>
   );
 }
 

@@ -6,6 +6,7 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { Redirect } from "react-router-dom";
 
 interface MenuProps {
   selected: number;
@@ -14,11 +15,12 @@ interface MenuProps {
 function SideMenu({ selected }: MenuProps) {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
+  const [path, setPath] = useState("");
 
   const toggle = () => {
     setCollapsed(!collapsed);
   };
-  return (
+  return !path ? (
     <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
       <div className="logo"></div>
       <Menu theme="dark" defaultSelectedKeys={[`${selected}`]} mode="inline">
@@ -26,7 +28,7 @@ function SideMenu({ selected }: MenuProps) {
           key="1"
           icon={<PieChartOutlined />}
           onClick={() => {
-            window.location.href = "/home/asdsa";
+            setPath("/overview");
           }}
         >
           Overview
@@ -35,19 +37,33 @@ function SideMenu({ selected }: MenuProps) {
           key="2"
           icon={<LineChartOutlined />}
           onClick={() => {
-            window.location.href = "/overview/asd";
+            setPath("/diagram");
           }}
         >
           Diagram
         </Menu.Item>
-        <Menu.Item key="3" icon={<ProfileOutlined />}>
+        <Menu.Item
+          key="3"
+          icon={<ProfileOutlined />}
+          onClick={() => {
+            setPath("/history");
+          }}
+        >
           History
         </Menu.Item>
-        <Menu.Item key="4" icon={<UserOutlined />}>
+        <Menu.Item
+          key="4"
+          icon={<UserOutlined />}
+          onClick={() => {
+            setPath("/account");
+          }}
+        >
           My Account
         </Menu.Item>
       </Menu>
     </Sider>
+  ) : (
+    <Redirect to={path}></Redirect>
   );
 }
 

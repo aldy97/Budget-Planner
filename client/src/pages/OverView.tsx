@@ -6,11 +6,11 @@ import Footer from "../components/Footer";
 import { connect } from "react-redux";
 import { RootState } from "../reducers/index";
 
-interface HomeProps {
+interface OverViewProps {
   email?: string;
 }
 
-function Home({ email }: HomeProps) {
+function OverView({ email }: OverViewProps) {
   const { Content } = Layout;
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -22,7 +22,7 @@ function Home({ email }: HomeProps) {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360, marginTop: 30 }}
           >
-            Home {email}
+            Overview {email}
           </div>
         </Content>
         <Footer></Footer>
@@ -37,4 +37,4 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, null)(OverView);
