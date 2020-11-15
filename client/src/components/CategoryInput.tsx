@@ -1,38 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Select } from "antd";
+import { ExpenseCategories, IncomeCategories } from "../utils/constants";
 import { UPDATE_CATEGORY, UpdateCategory } from "../actions/ModalAction";
 import { connect } from "react-redux";
 import { RootState } from "../reducers/index";
 import { Dispatch } from "redux";
 
 const { Option } = Select;
-const ExpenseCategories = ["Dinner", "Gas", "Stock", "Pet"];
-const IncomeCategories = ["Salery", "Gift Card", "Give away"];
 
 interface CategoryInputProps {
   recordType?: string;
+  category?: string;
+  updateCategoryToRedux?: any;
 }
 
-function CategoryInput({ recordType }: CategoryInputProps) {
+function CategoryInput({
+  recordType,
+  category,
+  updateCategoryToRedux,
+}: CategoryInputProps) {
+  // When recordType changes, reset category
+  useEffect(() => {
+    updateCategoryToRedux("");
+  }, [recordType]);
+
   const handleCategoryChange = (value: any) => {
-    console.log(`selected ${value}`);
+    updateCategoryToRedux(value);
   };
 
   return (
     <Select
-      placeholder="Category"
+      placeholder="Categories"
       style={{ width: 120 }}
       onChange={handleCategoryChange}
     >
-      {(recordType === "expense" ? ExpenseCategories : IncomeCategories).map(
-        (category, index) => {
-          return (
-            <Option key={index} value={category}>
-              {category}
-            </Option>
-          );
-        }
-      )}
+      {ExpenseCategories.map((category, index) => {
+        return (
+          <Option key={index} value={category}>
+            {category}
+          </Option>
+        );
+      })}
     </Select>
   );
 }
@@ -40,6 +48,7 @@ function CategoryInput({ recordType }: CategoryInputProps) {
 const mapState = (state: RootState) => {
   return {
     recordType: state.ModalReducer.recordType,
+    category: state.ModalReducer.category,
   };
 };
 
