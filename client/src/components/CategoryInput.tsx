@@ -17,10 +17,6 @@ function CategoryInput({ recordType, updateCategoryToRedux }: CategoryInputProps
     updateCategoryToRedux("");
   }, [recordType]);
 
-  const handleCategoryChange = (value: any) => {
-    updateCategoryToRedux(value);
-  };
-
   return recordType === "expense" ? (
     <ExpenseSelector></ExpenseSelector>
   ) : (
