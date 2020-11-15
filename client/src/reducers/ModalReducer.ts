@@ -4,6 +4,7 @@ import {
   UPDATE_CATEGORY,
   UPDATE_AMOUNT,
   UPDATE_DESCRIPTION,
+  CLEAR_RECORD,
   ModalAction,
 } from "../actions/ModalAction";
 
@@ -42,6 +43,9 @@ export const ModalReducer = (
     }
     case UPDATE_DESCRIPTION: {
       return { ...state, description: action.description };
+    }
+    case CLEAR_RECORD: {
+      return initialState;
     }
     default:
       return state;
