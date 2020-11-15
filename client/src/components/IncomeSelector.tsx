@@ -1,5 +1,5 @@
 import React from "react";
-import { ExpenseCategories } from "../utils/constants";
+import { IncomeCategories } from "../utils/constants";
 import { Select } from "antd";
 import { UPDATE_CATEGORY, UpdateCategory } from "../actions/ModalAction";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ interface SelectProps {
   updateCategoryToRedux?: any;
 }
 
-function ExpenseSelector({ updateCategoryToRedux }: SelectProps) {
+function IncomeSelector({ updateCategoryToRedux }: SelectProps) {
   const handleCategoryChange = (value: any) => {
     updateCategoryToRedux(value);
   };
@@ -21,7 +21,7 @@ function ExpenseSelector({ updateCategoryToRedux }: SelectProps) {
       style={{ width: 120 }}
       onChange={handleCategoryChange}
     >
-      {ExpenseCategories.map((category, index) => {
+      {IncomeCategories.map((category, index) => {
         return (
           <Option key={index} value={category}>
             {category}
@@ -44,4 +44,4 @@ const mapDispatch = (dispatch: Dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(ExpenseSelector);
+export default connect(null, mapDispatch)(IncomeSelector);
