@@ -6,7 +6,6 @@ import { Layout } from "antd";
 
 function Header() {
   const { Header } = Layout;
-
   const [visivle, setVisible] = useState(false);
 
   return (

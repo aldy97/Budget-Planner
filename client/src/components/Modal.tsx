@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RecordInput from "./RecordInput";
 import { Modal } from "antd";
 
 interface ModalProps {
@@ -9,7 +10,7 @@ interface ModalProps {
 function AddRecordModal({ visible, setVisible }: ModalProps) {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  // TODO: update DB
+  // TODO: update DB when OK is hit
   const handleOk = () => {
     setVisible(false);
   };
@@ -21,12 +22,14 @@ function AddRecordModal({ visible, setVisible }: ModalProps) {
   return (
     <>
       <Modal
-        title="Fill out records details"
+        title="Fill out record details"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
-      ></Modal>
+      >
+        <RecordInput></RecordInput>
+      </Modal>
     </>
   );
 }
