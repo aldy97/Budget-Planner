@@ -3,7 +3,14 @@ import styled from "styled-components";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { UPDATE_USER_EMAIL, UpdateEmail } from "../../actions/HomeAction";
+import {
+  UPDATE_USER_EMAIL,
+  UpdateEmail,
+  UpdateUID,
+  UPDATE_USER_ID,
+  UPDATE_USER_NAME,
+  UpdateName,
+} from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -15,9 +22,11 @@ export const StyledForm = styled(Form)`
 
 interface LoginFormProps {
   updateEmail?: any;
+  updateUserID?: any;
+  updateName?: any;
 }
 
-function LoginForm({ updateEmail }: LoginFormProps) {
+function LoginForm({ updateEmail, updateUserID, updateName }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,12 +35,16 @@ function LoginForm({ updateEmail }: LoginFormProps) {
   const handleLoginBtnClick = async () => {
     const request = { email, password };
     const response = await axios.post("/api/login", request);
-    if (response.data === "Login success") {
-      message.success("Login success!");
+    const isLogin = response.data.login;
+    const messageText = response.data.message;
+    if (isLogin) {
+      message.success("Login Success!");
       updateEmail(email);
+      updateUserID(response.data.uid);
+      updateName(response.data.name);
       setIsLogin(true);
     } else {
-      message.error(response.data);
+      message.error(messageText);
     }
   };
 
@@ -79,6 +92,14 @@ const mapDispatch = (dispatch: Dispatch) => {
   return {
     updateEmail(email: string) {
       const action: UpdateEmail = { type: UPDATE_USER_EMAIL, email };
+      dispatch(action);
+    },
+    updateUserID(uid: string) {
+      const action: UpdateUID = { type: UPDATE_USER_ID, uid };
+      dispatch(action);
+    },
+    updateName(name: string) {
+      const action: UpdateName = { type: UPDATE_USER_NAME, name };
       dispatch(action);
     },
   };

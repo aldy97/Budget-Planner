@@ -1,17 +1,20 @@
 import {
   UPDATE_USER_EMAIL,
   UPDATE_USER_NAME,
+  UPDATE_USER_ID,
   HomeAction,
 } from "../actions/HomeAction";
 
 export interface HomeReducerProps {
   email: string;
   name: string;
+  uid: string;
 }
 
 const initialState: HomeReducerProps = {
   email: "",
   name: "",
+  uid: "",
 };
 
 export const HomeReducer = (
@@ -24,6 +27,9 @@ export const HomeReducer = (
     }
     case UPDATE_USER_NAME: {
       return { ...state, name: action.name };
+    }
+    case UPDATE_USER_ID: {
+      return { ...state, uid: action.uid };
     }
     default:
       return state;

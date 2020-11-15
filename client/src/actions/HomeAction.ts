@@ -1,5 +1,6 @@
 export const UPDATE_USER_EMAIL = "update user email";
 export const UPDATE_USER_NAME = "update user name";
+export const UPDATE_USER_ID = "update user id";
 
 export interface UpdateEmail {
   type: typeof UPDATE_USER_EMAIL;
@@ -11,4 +12,9 @@ export interface UpdateName {
   name: string;
 }
 
-export type HomeAction = UpdateEmail | UpdateName;
+export interface UpdateUID {
+  type: typeof UPDATE_USER_ID;
+  uid: string;
+}
+
+export type HomeAction = UpdateEmail | UpdateName | UpdateUID;
