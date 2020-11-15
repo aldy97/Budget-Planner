@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecordInput from "./RecordInput";
+import { Record } from "../components/Overview/Content";
 import { message } from "antd";
 import axios from "axios";
 import { Modal } from "antd";
+import { UpdateRecords, UPDATE_RECORDS } from "../actions/HomeAction";
 import { CLEAR_RECORD, ClearRecord } from "../actions/ModalAction";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -18,6 +20,7 @@ interface ModalProps {
   amount?: number;
   description?: string;
   clearRecord?: any;
+  updateRecordsToRedux?: any;
 }
 
 function AddRecordModal({
@@ -30,10 +33,21 @@ function AddRecordModal({
   amount,
   description,
   clearRecord,
+  updateRecordsToRedux,
 }: ModalProps) {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  // TODO: reupdate Redux
+  const updateAllRecordsToRedux = async () => {
+    const response = await axios.get(`/api/getRecords/${user}`);
+    const records: Record[] = response.data;
+    updateRecordsToRedux(records);
+  };
+
+  useEffect(() => {
+    console.log("useEffect executed");
+    updateAllRecordsToRedux();
+  }, []);
+
   const handleOk = async () => {
     const request = {
       title,
@@ -45,8 +59,9 @@ function AddRecordModal({
     };
     const response = await axios.post("/api/createRecord", request);
     setVisible(false);
-    message.success("Record added!");
+    message.success(response.data);
     clearRecord();
+    updateAllRecordsToRedux();
   };
 
   const handleCancel = () => {
@@ -76,6 +91,7 @@ const mapState = (state: RootState) => {
     category: state.ModalReducer.category,
     amount: state.ModalReducer.amount,
     description: state.ModalReducer.description,
+    // records: state.HomeReducer.records,
   };
 };
 
@@ -84,6 +100,13 @@ const mapDispatch = (dispatch: Dispatch) => {
     clearRecord() {
       const action: ClearRecord = {
         type: CLEAR_RECORD,
+      };
+      dispatch(action);
+    },
+    updateRecordsToRedux(records: Record[]) {
+      const action: UpdateRecords = {
+        type: UPDATE_RECORDS,
+        records,
       };
       dispatch(action);
     },

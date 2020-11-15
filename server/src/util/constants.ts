@@ -1,4 +1,5 @@
 export const MESSAGES = {
+  ADD_RECORD_SUCC: 'Record is added successfully!',
   COMMENT_ID_NOT_FOUND: 'Comment id does not exist',
   COMMENT_ID_NOT_PROVIDED: 'Please provide comment id',
   CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',

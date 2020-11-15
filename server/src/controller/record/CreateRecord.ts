@@ -26,6 +26,7 @@ const createRecord = async (req: AugmentedRequest, res: Response) => {
 
   try {
     await new Record(recordInfo).save();
+    res.send(MESSAGES.ADD_RECORD_SUCC);
   } catch (e) {
     res.send(MESSAGES.UNEXPECTED_ERROR);
     throw new ServerError({
@@ -33,11 +34,6 @@ const createRecord = async (req: AugmentedRequest, res: Response) => {
       statusCode: 400,
     });
   }
-
-  const newRecord = await new Record(recordInfo).save();
-  const savedRecord = await Record.findById(newRecord._id);
-
-  res.json(savedRecord);
 };
 
 export default createRecord;

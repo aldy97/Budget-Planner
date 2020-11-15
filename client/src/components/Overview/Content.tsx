@@ -20,18 +20,22 @@ interface ContentProps {
 function Content({ user }: ContentProps) {
   const { Content } = Layout;
 
-  const fetchRecordsFromServer = async () => {
-    const response = await axios.get(`/api/getRecords/${user}`);
-    const records: Record[] = response.data;
-    const expense = records.filter(record => record.type === "expense");
-    const income = records.filter(record => record.type === "income");
-    console.log(expense);
-    console.log(income);
-  };
+  // const fetchRecordsFromServer = async () => {
+  //   const response = await axios.get(`/api/getRecords/${user}`);
+  //   const records: Record[] = response.data;
+  //   const expense: Record[] = records.filter(record => record.type === "expense");
+  //   const income: Record[] = records.filter(record => record.type === "income");
+  //   let expenseAmount = 0;
+  //   let incomeAmount = 0;
+  //   expense.map(record => (expenseAmount += record.amount));
+  //   income.map(record => (incomeAmount += record.amount));
+  //   console.log(expenseAmount);
+  //   console.log(incomeAmount);
+  // };
 
-  useEffect(() => {
-    fetchRecordsFromServer();
-  }, []);
+  // useEffect(() => {
+  //   fetchRecordsFromServer();
+  // }, []);
 
   return (
     <Content style={{ margin: "0 16px" }}>
