@@ -1,4 +1,5 @@
 import React from "react";
+import TitleInput from "./TitleInput";
 import TypeInput from "./TypeInput";
 import AmountInput from "./AmountInput";
 import { Input, Select, Space } from "antd";
@@ -14,7 +15,8 @@ const categories = ["Dinner", "Gas", "Stock", "Pet"];
 
 function RecordInput() {
   return (
-    <Space direction="vertical">
+    <Space size="middle" direction="vertical">
+      <TitleInput></TitleInput>
       <TypeInput></TypeInput>
       <Select
         placeholder="Category"
@@ -30,7 +32,7 @@ function RecordInput() {
         })}
       </Select>
       <AmountInput></AmountInput>
-      <TextArea placeholder="Description" showCount maxLength={50} />
+      <TextArea size="middle" placeholder="Description" showCount maxLength={50} />
     </Space>
   );
 }
