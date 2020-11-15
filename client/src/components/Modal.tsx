@@ -10,7 +10,7 @@ interface ModalProps {
 function AddRecordModal({ visible, setVisible }: ModalProps) {
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  // TODO: update DB when OK is hit
+  // TODO: update DB when OK is hit, reupdate Redux
   const handleOk = () => {
     setVisible(false);
   };

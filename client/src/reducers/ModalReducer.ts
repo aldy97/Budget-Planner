@@ -17,7 +17,7 @@ export interface ModalReducerProps {
 
 const initialState: ModalReducerProps = {
   title: "",
-  recordType: "",
+  recordType: "expense",
   category: "",
   amount: 0,
   description: "",
