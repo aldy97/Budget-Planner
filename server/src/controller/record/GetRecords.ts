@@ -4,7 +4,7 @@ import { Record, RecordDocument } from '../../model/Record';
 import { ServerError } from '../../util/utils';
 
 const getRecords = async (req: Request, res: Response) => {
-  const user: string = req.body.user;
+  const user: string = req.params.user;
   if (!user) {
     res.send(MESSAGES.USER_ID_NOT_PROVIDED);
   }

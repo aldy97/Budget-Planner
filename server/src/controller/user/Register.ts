@@ -85,7 +85,7 @@ const checkRegister = async (request: Request, response: Response) => {
     });
   }
 
-  response.send(200).json({ user: userInfo });
+  response.json({ uid: user._id, name: user.name });
 };
 
 export default checkRegister;

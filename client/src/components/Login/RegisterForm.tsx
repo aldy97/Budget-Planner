@@ -3,15 +3,24 @@ import { StyledForm } from "./LoginForm";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { UPDATE_USER_EMAIL, UpdateEmail } from "../../actions/HomeAction";
+import {
+  UPDATE_USER_EMAIL,
+  UpdateEmail,
+  UpdateUID,
+  UPDATE_USER_ID,
+  UPDATE_USER_NAME,
+  UpdateName,
+} from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 interface RegisterFormProps {
   updateEmail?: any;
+  updateUserID?: any;
+  updateName?: any;
 }
 
-function RegisterFrom({ updateEmail }: RegisterFormProps) {
+function RegisterFrom({ updateEmail, updateName, updateUserID }: RegisterFormProps) {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -49,6 +58,8 @@ function RegisterFrom({ updateEmail }: RegisterFormProps) {
     if (response.data === "OK") {
       message.success("Registration Success!");
       updateEmail(email);
+      updateUserID(response.data.uid);
+      updateName(response.data.name);
       setIsRegistered(true);
     } else {
       message.error(response.data);
@@ -100,6 +111,14 @@ const mapDispatch = (dispatch: Dispatch) => {
   return {
     updateEmail(email: string) {
       const action: UpdateEmail = { type: UPDATE_USER_EMAIL, email };
+      dispatch(action);
+    },
+    updateUserID(uid: string) {
+      const action: UpdateUID = { type: UPDATE_USER_ID, uid };
+      dispatch(action);
+    },
+    updateName(name: string) {
+      const action: UpdateName = { type: UPDATE_USER_NAME, name };
       dispatch(action);
     },
   };
