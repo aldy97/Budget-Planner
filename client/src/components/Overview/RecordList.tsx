@@ -22,7 +22,7 @@ function RecordList({ type, records }: ListProps) {
   return (
     <>
       <List
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginLeft: 30, marginRight: 30 }}
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
