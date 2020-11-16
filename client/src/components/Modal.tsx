@@ -91,7 +91,6 @@ const mapState = (state: RootState) => {
     category: state.ModalReducer.category,
     amount: state.ModalReducer.amount,
     description: state.ModalReducer.description,
-    // records: state.HomeReducer.records,
   };
 };
 

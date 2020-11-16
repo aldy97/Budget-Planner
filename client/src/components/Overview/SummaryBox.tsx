@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledBox = styled.div`
+const StyledBox = styled.div<Box>`
   padding: 80px;
   border: 2px solid #eee;
   border-radius: 10px;
@@ -9,16 +9,21 @@ const StyledBox = styled.div`
   text-align: center;
   flex: 1;
   font-size: 30px;
+  background: ${props =>
+    props.type === "income"
+      ? "linear-gradient(rgb(66, 161, 236), rgb(0, 112, 201))"
+      : "linear-gradient(#ffa940,#d46b08)"};
+  color: #fff;
 `;
 
 interface Box {
-  type: "expense" | "income";
-  amount: number;
+  type?: "expense" | "income";
+  amount?: number;
 }
 
 function SummaryBox({ type, amount }: Box) {
   return (
-    <StyledBox>
+    <StyledBox type={type}>
       <div>{type === "expense" ? "Monthly Expense" : "Monthly Income"}:</div>
       <div>${amount}</div>
     </StyledBox>

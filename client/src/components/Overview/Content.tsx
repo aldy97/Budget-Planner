@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SummaryBox from "./SummaryBox";
+import RecordList from "./RecordList";
 import { Layout } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
@@ -8,6 +9,10 @@ import { RootState } from "../../reducers/index";
 const SummaryWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const ListsWrapper = styled.div`
+  display: flex;
 `;
 
 export interface Record {
@@ -57,6 +62,10 @@ function Content({ records }: ContentProps) {
           <SummaryBox type="expense" amount={expenseMonthly}></SummaryBox>
           <SummaryBox type="income" amount={incomeMonthly}></SummaryBox>
         </SummaryWrapper>
+        <ListsWrapper>
+          <RecordList type="expense"></RecordList>
+          <RecordList type="income"></RecordList>
+        </ListsWrapper>
       </div>
     </Content>
   );
