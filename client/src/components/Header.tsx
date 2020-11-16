@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import AddRecordModal from "./Modal";
+import UserDropDown from "./UserDropDown";
 import { Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import { EditOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../reducers/index";
+import { Redirect } from "react-router-dom";
 
 interface HeaderProps {
   name?: string;
@@ -14,8 +15,9 @@ interface HeaderProps {
 function Header({ name }: HeaderProps) {
   const { Header } = Layout;
   const [visivle, setVisible] = useState(false);
+  const [isLogOut, setIsLogOut] = useState(false);
 
-  return (
+  return !isLogOut ? (
     <Header className="site-layout-background">
       <Button
         onClick={() => {
@@ -28,12 +30,13 @@ function Header({ name }: HeaderProps) {
       >
         Add Record
       </Button>
-      <span style={{ float: "right" }}>
-        <UserOutlined style={{ marginRight: 10 }}></UserOutlined>
-        {name}
-      </span>
+      <div style={{ float: "right" }}>
+        <UserDropDown name={name as string} logOut={setIsLogOut}></UserDropDown>
+      </div>
       <AddRecordModal visible={visivle} setVisible={setVisible}></AddRecordModal>
     </Header>
+  ) : (
+    <Redirect to="/"> </Redirect>
   );
 }
 

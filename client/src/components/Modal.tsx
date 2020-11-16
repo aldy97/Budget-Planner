@@ -44,7 +44,6 @@ function AddRecordModal({
   };
 
   useEffect(() => {
-    console.log("useEffect executed");
     updateAllRecordsToRedux();
   }, []);
 
