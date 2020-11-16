@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledBox = styled.div`
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 80px;
   border: 2px solid #eee;
   border-radius: 10px;
-  height: 80px;
-  line-height: 80px;
-  margin-bottom: 30px;
+  margin: 30px;
+  text-align: center;
+  flex: 1;
+  font-size: 30px;
 `;
 
 interface Box {
@@ -19,8 +19,8 @@ interface Box {
 function SummaryBox({ type, amount }: Box) {
   return (
     <StyledBox>
-      <span style={{ float: "left" }}>{type}:</span>
-      <span style={{ float: "right" }}>${amount}</span>
+      <div>{type === "expense" ? "Monthly Expense" : "Monthly Income"}:</div>
+      <div>${amount}</div>
     </StyledBox>
   );
 }

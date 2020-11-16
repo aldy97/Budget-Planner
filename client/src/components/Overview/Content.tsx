@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import SummaryBox from "./SummaryBox";
 import { Layout } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
+
+const SummaryWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 export interface Record {
   amount: number;
@@ -47,8 +53,10 @@ function Content({ records }: ContentProps) {
         className="site-layout-background"
         style={{ padding: 24, minHeight: 360, marginTop: 30 }}
       >
-        <SummaryBox type="expense" amount={expenseMonthly}></SummaryBox>
-        <SummaryBox type="income" amount={incomeMonthly}></SummaryBox>
+        <SummaryWrapper>
+          <SummaryBox type="expense" amount={expenseMonthly}></SummaryBox>
+          <SummaryBox type="income" amount={incomeMonthly}></SummaryBox>
+        </SummaryWrapper>
       </div>
     </Content>
   );
