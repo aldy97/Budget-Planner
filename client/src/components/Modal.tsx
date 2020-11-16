@@ -57,7 +57,7 @@ function AddRecordModal({
       description,
     };
     if (!category) {
-      message.error("Please choose a category");
+      message.warn("Please choose a category");
       return;
     }
     const response = await axios.post("/api/createRecord", request);
