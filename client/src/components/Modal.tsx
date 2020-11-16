@@ -62,7 +62,7 @@ function AddRecordModal({
     }
     const response = await axios.post("/api/createRecord", request);
     setVisible(false);
-    if (response.data.result) {
+    if (response.data.status) {
       message.success(response.data.message);
     } else {
       message.error(response.data.message);

@@ -21,6 +21,8 @@ export interface Record {
   title: string;
   type: string;
   category: string;
+  createdOn: string;
+  updatedOn: string;
 }
 
 interface ContentProps {
