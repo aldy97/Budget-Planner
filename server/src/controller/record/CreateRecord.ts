@@ -26,9 +26,9 @@ const createRecord = async (req: AugmentedRequest, res: Response) => {
 
   try {
     await new Record(recordInfo).save();
-    res.send(MESSAGES.ADD_RECORD_SUCC);
+    res.send({ message: MESSAGES.ADD_RECORD_SUCC, status: true });
   } catch (e) {
-    res.send(MESSAGES.UNEXPECTED_ERROR);
+    res.send({ message: MESSAGES.UNEXPECTED_ERROR, status: false });
     throw new ServerError({
       message: e,
       statusCode: 400,

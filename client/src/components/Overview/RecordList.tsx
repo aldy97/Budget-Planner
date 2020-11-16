@@ -1,4 +1,5 @@
 import React from "react";
+import Tag from "./CategoryTag";
 import { Record } from "./Content";
 import { List } from "antd";
 import { connect } from "react-redux";
@@ -17,6 +18,7 @@ function RecordList({ type, records }: ListProps) {
         .reverse()
         .slice(0, 5)
     : [];
+
   return (
     <>
       <List
@@ -25,7 +27,15 @@ function RecordList({ type, records }: ListProps) {
         dataSource={data}
         renderItem={item => (
           <List.Item>
-            <List.Item.Meta title={item.title} description={item.description} />
+            <List.Item.Meta
+              title={item.title}
+              description={
+                <div>
+                  <Tag type={item.type} category={item.category}></Tag>
+                  <div>{item.description}</div>
+                </div>
+              }
+            />
             <div style={{ marginRight: 30, color: "#8c8c8c" }}>${item.amount}</div>
           </List.Item>
         )}

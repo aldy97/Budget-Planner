@@ -56,9 +56,17 @@ function AddRecordModal({
       amount,
       description,
     };
+    if (!category) {
+      message.error("Please choose a category");
+      return;
+    }
     const response = await axios.post("/api/createRecord", request);
     setVisible(false);
-    message.success(response.data);
+    if (response.data.result) {
+      message.success(response.data.message);
+    } else {
+      message.error(response.data.message);
+    }
     clearRecord();
     updateAllRecordsToRedux();
   };
