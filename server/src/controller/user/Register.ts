@@ -63,7 +63,7 @@ const checkRegister = async (request: Request, response: Response) => {
 
   const user: UserDocument | null = await User.findOne({ email: email });
   if (user) {
-    response.send(MESSAGES.DUPLICATE_EMAIL);
+    response.json({ result: 'fail', message: MESSAGES.DUPLICATE_EMAIL });
     throw new ServerError({
       message: MESSAGES.DUPLICATE_EMAIL,
       statusCode: 400,
@@ -77,15 +77,14 @@ const checkRegister = async (request: Request, response: Response) => {
     password,
   };
   try {
-    await new User(userInfo).save();
+    const newUser = await new User(userInfo).save();
+    response.json({ result: 'succ', uid: newUser._id, name: newUser.name });
   } catch (e) {
     throw new ServerError({
       message: e,
       statusCode: 400,
     });
   }
-
-  response.json({ uid: user._id, name: user.name });
 };
 
 export default checkRegister;

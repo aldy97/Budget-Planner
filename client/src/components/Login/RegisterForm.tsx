@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyledForm } from "./LoginForm";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
@@ -31,6 +31,10 @@ function RegisterFrom({ updateEmail, updateName, updateUserID }: RegisterFormPro
 
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  useEffect(() => {
+    console.log(isRegistered);
+  });
+
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -55,14 +59,14 @@ function RegisterFrom({ updateEmail, updateName, updateUserID }: RegisterFormPro
       email: email,
     };
     const response = await axios.post(`/api/register`, request);
-    if (response.data === "OK") {
+    if (response.data.result === "succ") {
       message.success("Registration Success!");
       updateEmail(email);
       updateUserID(response.data.uid);
       updateName(response.data.name);
       setIsRegistered(true);
     } else {
-      message.error(response.data);
+      message.error(response.data.message);
     }
   };
 

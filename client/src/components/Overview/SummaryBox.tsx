@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const StyledBox = styled.div<Box>`
   padding: 80px;
-  border: 2px solid #eee;
   border-radius: 10px;
   margin: 30px;
   text-align: center;
