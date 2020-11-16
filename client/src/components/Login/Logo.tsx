@@ -2,24 +2,29 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  padding-top: 50px;
+  padding-top: 20px;
   text-align: center;
   margin-bottom: 20px;
 `;
 
-const LogoWrapper = styled.div`
-  width: 100px;
-  height: 100px;
-  border: 1px solid;
-  border-radius: 12px;
+const LogoWrapper = styled.div<LogoProps>`
+  width: ${props => (props.size === "large" ? "100px" : "40px")};
+  height: ${props => (props.size === "large" ? "100px" : "40px")};
+  border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  line-height: 100px;
-  font-size: 70px;
+  line-height: ${props => (props.size === "large" ? "100px" : "40px")};
+  font-size: ${props => (props.size === "large" ? "50px" : "20px")};
   font-style: futura;
   color: white;
   background: linear-gradient(rgb(66, 161, 236), rgb(0, 112, 201));
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const Name = styled.div`
@@ -28,11 +33,16 @@ const Name = styled.div`
   font-weight: bold;
 `;
 
-function Logo() {
+interface LogoProps {
+  showWords?: boolean;
+  size?: "large" | "medium";
+}
+
+function Logo({ showWords, size }: LogoProps) {
   return (
     <Wrapper>
-      <LogoWrapper>B</LogoWrapper>
-      <Name>Budget Planner</Name>
+      <LogoWrapper size={size}>BP</LogoWrapper>
+      {showWords && <Name>Budget Planner</Name>}
     </Wrapper>
   );
 }

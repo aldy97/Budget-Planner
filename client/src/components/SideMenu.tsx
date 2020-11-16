@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Logo from "./Login/Logo";
+import styled from "styled-components";
 import { Menu, Layout } from "antd";
 import {
   LineChartOutlined,
@@ -7,6 +9,15 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Redirect } from "react-router-dom";
+
+const StyledWord = styled.div`
+  color: white;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-style: futura;
+`;
 
 interface MenuProps {
   selected: number;
@@ -31,7 +42,16 @@ function SideMenu({ selected }: MenuProps) {
 
   return !path ? (
     <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
-      <div className="logo"></div>
+      <div
+        className="logo"
+        style={{ cursor: "pointer" }}
+        onClick={() => {
+          handleMenuItemClick("overview");
+        }}
+      >
+        <Logo size="medium" showWords={false}></Logo>
+        <StyledWord>Budget Planner</StyledWord>
+      </div>
       <Menu theme="dark" defaultSelectedKeys={[`${selected}`]} mode="inline">
         <Menu.Item
           key="1"

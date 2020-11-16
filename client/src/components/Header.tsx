@@ -27,10 +27,11 @@ function Header({ name }: HeaderProps) {
         shape="round"
         icon={<EditOutlined />}
         size="large"
+        style={{ marginLeft: -33 }}
       >
         Add Record
       </Button>
-      <div style={{ float: "right" }}>
+      <div style={{ float: "right", marginRight: -33 }}>
         <UserDropDown name={name as string} logOut={setIsLogOut}></UserDropDown>
       </div>
       <AddRecordModal visible={visivle} setVisible={setVisible}></AddRecordModal>

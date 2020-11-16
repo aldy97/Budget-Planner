@@ -17,7 +17,7 @@ function Login() {
 
   return (
     <>
-      <Logo></Logo>
+      <Logo size="large" showWords></Logo>
       <LoginRegToggler atLogin={isAtLogin} toogle={toogle}></LoginRegToggler>
       {isAtLogin && <LoginForm></LoginForm>}
       {!isAtLogin && <RegisterFrom></RegisterFrom>}
