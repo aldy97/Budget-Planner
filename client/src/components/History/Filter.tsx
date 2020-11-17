@@ -9,6 +9,7 @@ import {
   ChooseCategory,
   CHOOSECATEGORY,
 } from "../../actions/FilterAction";
+import moment from "moment";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
@@ -17,6 +18,8 @@ const { Option, OptGroup } = Select;
 
 interface FilterProps {
   enabled: boolean;
+  month: string;
+  category: string;
   toggleSwitch: any;
   updateMonthToRedux: any;
   updateCategoryToRedux: any;
@@ -24,6 +27,8 @@ interface FilterProps {
 
 function Filter({
   enabled,
+  month,
+  category,
   toggleSwitch,
   updateMonthToRedux,
   updateCategoryToRedux,
@@ -31,9 +36,9 @@ function Filter({
   const handleSwitchChange = () => {
     toggleSwitch(!enabled);
   };
+
   const handleMonthChange = (date: any, dateString: string) => {
-    const month = dateString.split("-")[1];
-    updateMonthToRedux(month);
+    updateMonthToRedux(dateString);
   };
 
   const handleCategoryChange = (value: string) => {
@@ -44,9 +49,15 @@ function Filter({
     <Space>
       <span>Apply Filter:</span>
       <Switch checked={enabled} onChange={handleSwitchChange}></Switch>
-      <DatePicker disabled={!enabled} onChange={handleMonthChange} picker="month" />
+      <DatePicker
+        defaultValue={month === "" ? undefined : moment(month)}
+        disabled={!enabled}
+        onChange={handleMonthChange}
+        picker="month"
+      />
       <span>Choose category:</span>
       <Select
+        defaultValue={category}
         disabled={!enabled}
         allowClear
         style={{ width: 200 }}
@@ -78,6 +89,8 @@ function Filter({
 const mapState = (state: RootState) => {
   return {
     enabled: state.FilterReducer.enabled,
+    month: state.FilterReducer.month,
+    category: state.FilterReducer.category,
   };
 };
 
