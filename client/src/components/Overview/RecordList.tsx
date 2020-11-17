@@ -19,7 +19,7 @@ function RecordList({ type, records, maxLength }: ListProps) {
     return parseInt(date.split("-")[1]);
   };
 
-  // 根据记录类型展示指定数量
+  // 根据记录类型，展示当月指定数量的记录
   const data = records
     ? records
         .filter(record => record.type === type)

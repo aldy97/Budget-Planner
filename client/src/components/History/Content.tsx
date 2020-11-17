@@ -1,6 +1,7 @@
 import React from "react";
-import { Layout } from "antd";
+import { Layout, Space } from "antd";
 import Filter from "./Filter";
+import RecordList from "./RecordList";
 
 function Content() {
   const { Content } = Layout;
@@ -11,6 +12,7 @@ function Content() {
         style={{ padding: 24, minHeight: 360, marginTop: 30 }}
       >
         <Filter></Filter>
+        <RecordList></RecordList>
       </div>
     </Content>
   );

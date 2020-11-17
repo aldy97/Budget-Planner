@@ -50,6 +50,7 @@ function Filter({
       <span>Apply Filter:</span>
       <Switch checked={enabled} onChange={handleSwitchChange}></Switch>
       <DatePicker
+        allowClear
         defaultValue={month === "" ? undefined : moment(month)}
         disabled={!enabled}
         onChange={handleMonthChange}
@@ -57,9 +58,9 @@ function Filter({
       />
       <span>Choose category:</span>
       <Select
+        allowClear
         defaultValue={category}
         disabled={!enabled}
-        allowClear
         style={{ width: 200 }}
         onChange={handleCategoryChange}
       >

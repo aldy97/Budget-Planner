@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button } from "antd";
 
 interface DropDown {
@@ -15,7 +15,10 @@ function UserDropDown({ name, logOut }: DropDown) {
   const menu = (
     <Menu>
       <Menu.Item>
-        <a onClick={handleLogOutBtnClcik}>Log Out</a>
+        <a onClick={handleLogOutBtnClcik}>
+          <LogoutOutlined />
+          Log Out
+        </a>
       </Menu.Item>
     </Menu>
   );
