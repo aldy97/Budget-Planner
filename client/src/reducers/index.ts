@@ -1,16 +1,19 @@
 import { applyMiddleware, combineReducers, createStore, Middleware } from "redux";
 import { HomeReducer, HomeReducerProps } from "./HomeReducer";
 import { ModalReducer, ModalReducerProps } from "./ModalReducer";
+import { FilterReducer, FilterReducerProps } from "./FilterReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 export interface RootState {
   HomeReducer: HomeReducerProps;
   ModalReducer: ModalReducerProps;
+  FilterReducer: FilterReducerProps;
 }
 
 const rootReducer = combineReducers({
   HomeReducer,
   ModalReducer,
+  FilterReducer,
 });
 
 export const configureStore = () => {
