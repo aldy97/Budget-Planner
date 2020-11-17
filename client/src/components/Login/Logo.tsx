@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  padding-top: 20px;
+const Wrapper = styled.div<LogoProps>`
+  padding-top: ${props => (props.size === "large" ? "60px" : "20px")};
   text-align: center;
   margin-bottom: 20px;
 `;
@@ -40,7 +40,7 @@ interface LogoProps {
 
 function Logo({ showWords, size }: LogoProps) {
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       <LogoWrapper size={size}>BP</LogoWrapper>
       {showWords && <Name>Budget Planner</Name>}
     </Wrapper>

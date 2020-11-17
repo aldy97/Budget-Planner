@@ -44,7 +44,7 @@ function SideMenu({ selected }: MenuProps) {
     <Sider collapsible collapsed={collapsed} onCollapse={toggle}>
       <div
         className="logo"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", marginTop: -8 }}
         onClick={() => {
           handleMenuItemClick("overview");
         }}
