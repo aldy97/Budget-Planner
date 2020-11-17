@@ -9,22 +9,23 @@ import { RootState } from "../../reducers/index";
 interface ListProps {
   type: "expense" | "income";
   records?: Record[];
+  maxLength?: number;
 }
 
-function RecordList({ type, records }: ListProps) {
+function RecordList({ type, records, maxLength }: ListProps) {
   const currMonth = moment().month() + 1;
 
   const getRecordMonth = (date: string): number => {
     return parseInt(date.split("-")[1]);
   };
 
-  // 根据记录类型，展示最新的五项
+  // 根据记录类型展示指定数量
   const data = records
     ? records
         .filter(record => record.type === type)
         .filter(record => getRecordMonth(record.createdOn) === currMonth)
         .reverse()
-        .slice(0, 5)
+        .slice(0, maxLength ? maxLength : undefined)
     : [];
 
   return (

@@ -65,8 +65,8 @@ function Content({ records }: ContentProps) {
           <SummaryBox type="income" amount={incomeMonthly}></SummaryBox>
         </SummaryWrapper>
         <ListsWrapper>
-          <RecordList type="expense"></RecordList>
-          <RecordList type="income"></RecordList>
+          <RecordList maxLength={5} type="expense"></RecordList>
+          <RecordList maxLength={5} type="income"></RecordList>
         </ListsWrapper>
       </div>
     </Content>
