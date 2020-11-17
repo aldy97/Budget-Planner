@@ -19,13 +19,20 @@ const StyledToggler = styled.div`
   margin-right: auto;
   text-align: center;
   display: flex;
+  .option: hover {
+    color: ${COLORS.THEMEBLUE};
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+  }
 `;
 
 const StyledItem = styled.span<ItemProps>`
   flex: 1;
   color: ${props =>
     props.highlighted ? COLORS.THEMEBLUE : COLORS.UNSELECTEDOPTION};
-  cursor: pointer;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -49,11 +56,23 @@ function LoginRegToggler({ atLogin, toogle }: Toggler) {
 
   return (
     <StyledToggler>
-      <StyledItem onClick={handleLoginClick} highlighted={atLogin}>
-        Login
+      <StyledItem highlighted={atLogin}>
+        <span
+          className="option"
+          onClick={handleLoginClick}
+          style={{ cursor: "pointer" }}
+        >
+          Login
+        </span>
       </StyledItem>
-      <StyledItem onClick={handleRegisterClick} highlighted={!atLogin}>
-        Register
+      <StyledItem highlighted={!atLogin}>
+        <span
+          className="option"
+          onClick={handleRegisterClick}
+          style={{ cursor: "pointer" }}
+        >
+          Register
+        </span>
       </StyledItem>
     </StyledToggler>
   );
