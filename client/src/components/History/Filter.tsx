@@ -1,9 +1,22 @@
 import React from "react";
 import { Switch, Space, Select, DatePicker } from "antd";
 import { ExpenseCategories, IncomeCategories } from "../../utils/constants";
+import { TOGGLEFILTER, ToggleFilter } from "../../actions/FilterAction";
+import { connect } from "react-redux";
+import { RootState } from "../../reducers/index";
+import { Dispatch } from "redux";
 
 const { Option, OptGroup } = Select;
-function Filter() {
+
+interface FilterProps {
+  enabled: boolean;
+  toggleSwitch: any;
+}
+
+function Filter({ enabled, toggleSwitch }: FilterProps) {
+  const handleSwitchChange = () => {
+    toggleSwitch(!enabled);
+  };
   const handleMonthChange = (date: any, dateString: string) => {
     console.log(dateString);
   };
@@ -14,7 +27,7 @@ function Filter() {
   return (
     <Space>
       <span>Apply Filter:</span>
-      <Switch></Switch>
+      <Switch checked={enabled} onChange={handleSwitchChange}></Switch>
       <DatePicker onChange={handleMonthChange} picker="month" />
       <span>Choose category:</span>
       <Select allowClear style={{ width: 200 }} onChange={handleCategoryChange}>
@@ -41,4 +54,22 @@ function Filter() {
   );
 }
 
-export default Filter;
+const mapState = (state: RootState) => {
+  return {
+    enabled: state.FilterReducer.enabled,
+  };
+};
+
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    toggleSwitch(enabled: boolean) {
+      const action: ToggleFilter = {
+        type: TOGGLEFILTER,
+        enabled,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(Filter);
