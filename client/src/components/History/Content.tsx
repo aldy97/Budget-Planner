@@ -11,7 +11,9 @@ function Content() {
         className="site-layout-background"
         style={{ padding: 24, minHeight: 360, marginTop: 30 }}
       >
-        <Filter></Filter>
+        <div style={{ textAlign: "center" }}>
+          <Filter></Filter>
+        </div>
         <RecordList></RecordList>
       </div>
     </Content>

@@ -15,9 +15,9 @@ function UserDropDown({ name, logOut }: DropDown) {
   const menu = (
     <Menu>
       <Menu.Item>
-        <a onClick={handleLogOutBtnClcik}>
-          <LogoutOutlined />
-          Log Out
+        <a style={{ textAlign: "center" }} onClick={handleLogOutBtnClcik}>
+          <LogoutOutlined style={{ color: "red" }} />
+          <span>Log Out</span>
         </a>
       </Menu.Item>
     </Menu>

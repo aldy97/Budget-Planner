@@ -67,7 +67,7 @@ function AddRecordModal({
     } else {
       message.error(response.data.message);
     }
-    clearRecord();
+    // clearRecord();
     updateAllRecordsToRedux();
   };
 

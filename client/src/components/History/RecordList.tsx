@@ -15,7 +15,7 @@ interface List {
 function RecordList({ records, enabled, month, category }: List) {
   const [data, setData] = useState<Record[]>([]);
 
-  const generateRecords = () => {
+  const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];
     if (!enabled) {
       modifiedRecord = records ? records : [];
@@ -40,6 +40,7 @@ function RecordList({ records, enabled, month, category }: List) {
           : [];
       }
     }
+    // caution: update state only at the top level
     setData(modifiedRecord.reverse());
   };
 

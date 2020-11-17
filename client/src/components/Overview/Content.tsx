@@ -15,6 +15,12 @@ const ListsWrapper = styled.div`
   display: flex;
 `;
 
+const StyledHint = styled.div`
+  margin-top: 10px;
+  text-align: center;
+  color: #8c8c8c;
+`;
+
 export interface Record {
   amount: number;
   description: string;
@@ -68,6 +74,7 @@ function Content({ records }: ContentProps) {
           <RecordList maxLength={5} type="expense"></RecordList>
           <RecordList maxLength={5} type="income"></RecordList>
         </ListsWrapper>
+        <StyledHint>Only 5 most recent records are shown</StyledHint>
       </div>
     </Content>
   );
