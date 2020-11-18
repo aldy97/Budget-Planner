@@ -4,13 +4,25 @@ import { Layout } from "antd";
 import LineChart from "./LineChart";
 import PieChart from "./PieChart";
 
-const BigWrapper = styled.div`
-  dislay: flex;
-  flex-direction: horizontal;
+const StyledChartsWrapper = styled.div`
+  display: flex;
+  border: 1px solid black;
 `;
 
-const ChartWrapper = styled.div`
+const LeftSection = styled.div`
   flex: 1;
+`;
+
+const RightSection = styled.div`
+  flex: 1;
+`;
+
+const Title = styled.div`
+  text-align: center;
+  font-color: #434343;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: futura;
 `;
 
 function Content() {
@@ -19,18 +31,20 @@ function Content() {
     <Content style={{ margin: "0 16px" }}>
       <div
         className="site-layout-background"
-        style={{ padding: 24, minHeight: 360, marginTop: 30 }}
+        style={{ paddingTop: 30, minHeight: 360, marginTop: 30 }}
       >
-        <LineChart type="expense"></LineChart>
-        <LineChart type="income"></LineChart>
-        <BigWrapper>
-          <ChartWrapper>
+        <StyledChartsWrapper>
+          <LeftSection>
+            <Title>Expense/Income Trend</Title>
+            <LineChart type="expense"></LineChart>
+            <LineChart type="income"></LineChart>
+          </LeftSection>
+          <RightSection>
+            <Title>Expense/Income Distribution</Title>
             <PieChart type="expense"></PieChart>
-          </ChartWrapper>
-          <ChartWrapper>
             <PieChart type="income"></PieChart>
-          </ChartWrapper>
-        </BigWrapper>
+          </RightSection>
+        </StyledChartsWrapper>
       </div>
     </Content>
   );

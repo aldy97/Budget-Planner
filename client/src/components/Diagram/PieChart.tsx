@@ -95,6 +95,7 @@ function PieChart({ type, records }: PieChartProps) {
   return (
     <div>
       <ReactEcharts
+        style={{}}
         option={option}
         notMerge={true}
         lazyUpdate={true}
