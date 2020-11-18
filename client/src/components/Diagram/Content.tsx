@@ -18,16 +18,15 @@ const RightSection = styled.div`
 
 const Title = styled.div`
   text-align: center;
-  font-color: #434343;
+  color: #595959;
   font-size: 20px;
   font-weight: bold;
-  font-family: futura;
 `;
 
 function Content() {
   const { Content } = Layout;
   return (
-    <Content style={{ margin: "0 16px" }}>
+    <Content style={{ margin: "3px 16px" }}>
       <div
         className="site-layout-background"
         style={{ padding: 30, minHeight: 360, marginTop: 30 }}

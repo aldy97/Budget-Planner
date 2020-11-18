@@ -6,10 +6,17 @@ import RecordList from "./RecordList";
 function Content() {
   const { Content } = Layout;
   return (
-    <Content style={{ margin: "0 16px" }}>
+    <Content style={{ margin: "3px 16px" }}>
       <div
         className="site-layout-background"
-        style={{ padding: 24, minHeight: 360, marginTop: 30 }}
+        style={{
+          paddingLeft: 152,
+          paddingRight: 152,
+          paddingTop: 24,
+          paddingBottom: 24,
+          minHeight: 360,
+          marginTop: 30,
+        }}
       >
         <div style={{ textAlign: "center" }}>
           <Filter></Filter>

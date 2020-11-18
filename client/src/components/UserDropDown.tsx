@@ -1,15 +1,14 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu, Dropdown, Button } from "antd";
 
 interface DropDown {
   name: string;
-  logOut: Dispatch<SetStateAction<boolean>>;
 }
 
-function UserDropDown({ name, logOut }: DropDown) {
+function UserDropDown({ name }: DropDown) {
   const handleLogOutBtnClcik = () => {
-    logOut(true);
+    window.location.href = "/";
   };
 
   const menu = (

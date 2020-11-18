@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div<LogoProps>`
-  padding-top: ${props => (props.size === "large" ? "60px" : "20px")};
+  padding-top: ${props => (props.size === "large" ? "56px" : "20px")};
   text-align: center;
   margin-bottom: 20px;
 `;

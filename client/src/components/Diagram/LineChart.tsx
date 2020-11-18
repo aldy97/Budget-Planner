@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactEcharts from "echarts-for-react";
 import moment from "moment";
+import { COLORS } from "../../utils/constants";
 import { Record } from "../Overview/Content";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
@@ -47,7 +48,7 @@ function LineChart({ type, records }: LineChartProps) {
     getTotalsInPastWeek();
   }, [type, records]);
 
-  const option = {
+  const expenseOption = {
     xAxis: {
       type: "category",
       data: days,
@@ -61,11 +62,64 @@ function LineChart({ type, records }: LineChartProps) {
         type: "line",
       },
     ],
+    color: {
+      type: "radical",
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [
+        {
+          offset: 0,
+          color: COLORS.ORANGE,
+        },
+        {
+          offset: 1,
+          color: COLORS.ORANGE,
+        },
+      ],
+      global: false,
+    },
   };
+
+  const incomeOption = {
+    xAxis: {
+      type: "category",
+      data: days,
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: totalsInPastWeek,
+        type: "line",
+      },
+    ],
+    color: {
+      type: "radical",
+      x: 0,
+      y: 0,
+      x2: 0,
+      y2: 1,
+      colorStops: [
+        {
+          offset: 0,
+          color: COLORS.THEMEBLUE,
+        },
+        {
+          offset: 1,
+          color: COLORS.THEMEBLUE,
+        },
+      ],
+      global: false,
+    },
+  };
+
   return (
     <div>
       <ReactEcharts
-        option={option}
+        option={type === "expense" ? expenseOption : incomeOption}
         notMerge={true}
         lazyUpdate={true}
         theme={"theme_name"}

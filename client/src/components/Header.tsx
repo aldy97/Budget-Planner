@@ -32,7 +32,7 @@ function Header({ name }: HeaderProps) {
         Add Record
       </Button>
       <div style={{ float: "right", marginRight: -33 }}>
-        <UserDropDown name={name as string} logOut={setIsLogOut}></UserDropDown>
+        <UserDropDown name={name as string}></UserDropDown>
       </div>
       <AddRecordModal visible={visivle} setVisible={setVisible}></AddRecordModal>
     </Header>

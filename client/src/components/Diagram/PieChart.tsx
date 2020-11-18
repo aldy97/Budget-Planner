@@ -16,7 +16,7 @@ function PieChart({ type, records }: PieChartProps) {
     : [];
 
   const [days, setDays] = useState<string[]>([]);
-  // const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [data, setData] = useState([]);
 
   // 取得包括今天在内的七天日期📅
@@ -49,6 +49,7 @@ function PieChart({ type, records }: PieChartProps) {
         name: tempCategories[i],
       });
     }
+    setCategories(tempCategories);
     setData(tempDataCorrected as any);
   };
 
@@ -65,7 +66,7 @@ function PieChart({ type, records }: PieChartProps) {
     legend: {
       orient: "vertical",
       left: 10,
-      data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"],
+      data: categories,
     },
     series: [
       {

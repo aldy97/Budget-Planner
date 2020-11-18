@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyledForm } from "./LoginForm";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
@@ -30,10 +30,6 @@ function RegisterFrom({ updateEmail, updateName, updateUserID }: RegisterFormPro
   const [password, setPassword] = useState("");
 
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  useEffect(() => {
-    console.log(isRegistered);
-  });
 
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
