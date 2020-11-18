@@ -3,6 +3,7 @@ import Tag from "../Overview/CategoryTag";
 import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
+import axios from "axios";
 import { List } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
@@ -50,6 +51,12 @@ function RecordList({ records, enabled, month, category }: List) {
     generateRecords();
   }, [enabled, month, category, records]);
 
+  const handleDelBtnClick = async (recordID: string) => {
+    const request = { data: { recordID } };
+    const response = await axios.delete("/api/deleteRecord", request);
+    console.log(response);
+  };
+
   return (
     <>
       <List
@@ -66,6 +73,9 @@ function RecordList({ records, enabled, month, category }: List) {
               <DeleteOutlined
                 style={{ color: "#f5222d", cursor: "pointer" }}
                 key="delete-item"
+                onClick={() => {
+                  handleDelBtnClick(item._id);
+                }}
               ></DeleteOutlined>,
             ]}
           >
