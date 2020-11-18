@@ -4,7 +4,7 @@ import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
-import { List, message } from "antd";
+import { List, message, Popconfirm } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
@@ -92,13 +92,20 @@ function RecordList({
                 style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
                 key="edit-item"
               ></EditOutlined>,
-              <DeleteOutlined
-                style={{ color: "#f5222d", cursor: "pointer" }}
+              <Popconfirm
                 key="delete-item"
-                onClick={() => {
+                placement="topLeft"
+                title="Deletion is permanent. Do you want to delete this record?"
+                onConfirm={() => {
                   handleDelBtnClick(item._id);
                 }}
-              ></DeleteOutlined>,
+                okText="Yes"
+                cancelText="No"
+              >
+                <DeleteOutlined
+                  style={{ color: "#f5222d", cursor: "pointer" }}
+                ></DeleteOutlined>
+              </Popconfirm>,
             ]}
           >
             <List.Item.Meta
