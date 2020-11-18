@@ -64,7 +64,7 @@ function Content({ records }: ContentProps) {
     <Content style={{ margin: "0 16px" }}>
       <div
         className="site-layout-background"
-        style={{ padding: 24, minHeight: 360, marginTop: 30 }}
+        style={{ padding: 24, paddingTop: 5, minHeight: 360, marginTop: 30 }}
       >
         <SummaryWrapper>
           <SummaryBox type="expense" amount={expenseMonthly}></SummaryBox>

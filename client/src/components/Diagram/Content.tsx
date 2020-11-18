@@ -30,7 +30,7 @@ function Content() {
     <Content style={{ margin: "0 16px" }}>
       <div
         className="site-layout-background"
-        style={{ paddingTop: 30, minHeight: 360, marginTop: 30 }}
+        style={{ padding: 30, minHeight: 360, marginTop: 30 }}
       >
         <StyledChartsWrapper>
           <LeftSection>
@@ -42,7 +42,7 @@ function Content() {
             <PieChart type="income"></PieChart>
           </RightSection>
         </StyledChartsWrapper>
-        <div>
+        <div style={{ marginLeft: 120, marginRight: 120 }}>
           <Title>Expense Trend</Title>
           <LineChart type="expense"></LineChart>
           <Title>Income Trend</Title>
