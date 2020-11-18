@@ -10,9 +10,11 @@ interface LineChartProps {
   records?: Record[];
 }
 
-// 折线图：根据记录类型展示当月的消费/收入记录
+// 折线图：根据记录类型展示本周的消费/收入记录
 function LineChart({ type, records }: LineChartProps) {
+  // 过去七天日期
   const [days, setDays] = useState<string[]>([]);
+  // 过去七天每日的记录总额
   const [totalsInPastWeek, setTotalInPastWeek] = useState<number[]>([]);
 
   // 取得包括今天在内的七天日期📅
@@ -39,7 +41,7 @@ function LineChart({ type, records }: LineChartProps) {
     setTotalInPastWeek(tempTotalsInPastWeek);
   };
 
-  // 两个函数的顺序不能颠倒⚠️
+  // 两个函数的顺序不能颠倒
   useEffect(() => {
     getDays();
     getTotalsInPastWeek();
