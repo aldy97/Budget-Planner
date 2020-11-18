@@ -6,7 +6,6 @@ import PieChart from "./PieChart";
 
 const StyledChartsWrapper = styled.div`
   display: flex;
-  border: 1px solid black;
 `;
 
 const LeftSection = styled.div`
@@ -35,16 +34,20 @@ function Content() {
       >
         <StyledChartsWrapper>
           <LeftSection>
-            <Title>Expense/Income Trend</Title>
-            <LineChart type="expense"></LineChart>
-            <LineChart type="income"></LineChart>
+            <Title>Expense Distribution</Title>
+            <PieChart type="expense"></PieChart>
           </LeftSection>
           <RightSection>
-            <Title>Expense/Income Distribution</Title>
-            <PieChart type="expense"></PieChart>
+            <Title>Income Distribution</Title>
             <PieChart type="income"></PieChart>
           </RightSection>
         </StyledChartsWrapper>
+        <div>
+          <Title>Expense Trend</Title>
+          <LineChart type="expense"></LineChart>
+          <Title>Income Trend</Title>
+          <LineChart type="income"></LineChart>
+        </div>
       </div>
     </Content>
   );
