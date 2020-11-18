@@ -4,6 +4,7 @@ import OverView from "./pages/OverView";
 import Diagram from "./pages/Diagram";
 import History from "./pages/History";
 import Account from "./pages/Account";
+import { BackTop } from "antd";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "./reducers/index";
@@ -13,6 +14,7 @@ const store = configureStore();
 const App: React.FC = () => {
   return (
     <Provider store={store}>
+      <BackTop />
       <BrowserRouter>
         <Route path="/" exact component={() => <Login></Login>}></Route>
         <Route
