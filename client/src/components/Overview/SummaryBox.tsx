@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledBox = styled.div<Box>`
   padding: 80px;
   border-radius: 10px;
-  margin: 30px;
+  margin: 32px;
   text-align: center;
   flex: 1;
   font-size: 30px;

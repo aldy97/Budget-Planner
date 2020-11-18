@@ -3,6 +3,7 @@ import login from './user/Login';
 import register from './user/Register';
 import createRecord from './record/CreateRecord';
 import getRecords from './record/GetRecords';
+import deleteRecord from './record/DeleteRecord';
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ router.use('/api', register);
 router.use('/api', login);
 router.use('/api', createRecord);
 router.use('/api', getRecords);
+router.use('/api', deleteRecord);
 
 export default router;

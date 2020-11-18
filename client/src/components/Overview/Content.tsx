@@ -61,7 +61,7 @@ function Content({ records }: ContentProps) {
   }, [records]);
 
   return (
-    <Content style={{ margin: "3px 16px" }}>
+    <Content style={{ margin: "4px 16px" }}>
       <div
         className="site-layout-background"
         style={{ padding: 24, paddingTop: 5, minHeight: 360, marginTop: 30 }}
