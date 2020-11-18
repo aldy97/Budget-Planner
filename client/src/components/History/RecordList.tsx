@@ -4,18 +4,29 @@ import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
-import { List } from "antd";
+import { List, message } from "antd";
+import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
+import { Dispatch } from "redux";
 
 interface List {
   records?: Record[];
   enabled?: boolean;
   month?: string;
   category?: string;
+  updateRecordsToRedux?: any;
+  user?: any;
 }
 
-function RecordList({ records, enabled, month, category }: List) {
+function RecordList({
+  records,
+  enabled,
+  month,
+  category,
+  updateRecordsToRedux,
+  user,
+}: List) {
   const [data, setData] = useState<Record[]>([]);
 
   const generateRecords = (): void => {
@@ -51,10 +62,21 @@ function RecordList({ records, enabled, month, category }: List) {
     generateRecords();
   }, [enabled, month, category, records]);
 
+  const updateAllRecordsToRedux = async () => {
+    const response = await axios.get(`/api/getRecords/${user}`);
+    const records: Record[] = response.data;
+    updateRecordsToRedux(records);
+  };
+
   const handleDelBtnClick = async (recordID: string) => {
     const request = { data: { recordID } };
     const response = await axios.delete("/api/deleteRecord", request);
-    console.log(response);
+    if (response.data.succ) {
+      updateAllRecordsToRedux();
+      message.success(response.data.message);
+    } else {
+      message.error(response.data.message);
+    }
   };
 
   return (
@@ -98,6 +120,7 @@ function RecordList({ records, enabled, month, category }: List) {
 
 const mapState = (state: RootState) => {
   return {
+    user: state.HomeReducer.uid,
     records: state.HomeReducer.records,
     enabled: state.FilterReducer.enabled,
     month: state.FilterReducer.month,
@@ -105,4 +128,16 @@ const mapState = (state: RootState) => {
   };
 };
 
-export default connect(mapState, null)(RecordList);
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    updateRecordsToRedux(records: Record[]) {
+      const action: UpdateRecords = {
+        type: UPDATE_RECORDS,
+        records,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(RecordList);

@@ -8,7 +8,7 @@ const deleteRecord = async (req: AugmentedRequest, res: Response) => {
   const recordID = req.body.recordID;
 
   if (!recordID) {
-    res.send({ message: MESSAGES.RECORD_NOT_FOUND });
+    res.send({ succ: false, message: MESSAGES.RECORD_NOT_FOUND });
     throw new ServerError({ statusCode: 400, message: MESSAGES.RECORD_NOT_FOUND });
   }
 
@@ -16,7 +16,7 @@ const deleteRecord = async (req: AugmentedRequest, res: Response) => {
   try {
     recordExist = await Record.exists({ _id: recordID });
   } catch (e) {
-    res.send({ message: MESSAGES.RECORD_NOT_FOUND });
+    res.send({ succ: false, message: MESSAGES.RECORD_NOT_FOUND });
     throw new ServerError({
       statusCode: 400,
       message: MESSAGES.RECORD_NOT_FOUND,
@@ -24,14 +24,14 @@ const deleteRecord = async (req: AugmentedRequest, res: Response) => {
   }
 
   if (!recordExist) {
-    res.send({ message: MESSAGES.RECORD_NOT_FOUND });
+    res.send({ succ: false, message: MESSAGES.RECORD_NOT_FOUND });
     throw new ServerError({
       statusCode: 400,
       message: MESSAGES.RECORD_NOT_FOUND,
     });
   } else {
     await Record.deleteOne({ _id: recordID });
-    res.send({ message: MESSAGES.DEL_RECORD_SUCC });
+    res.send({ succ: true, message: MESSAGES.DEL_RECORD_SUCC });
   }
 };
 
