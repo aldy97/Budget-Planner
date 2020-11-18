@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Tag from "../Overview/CategoryTag";
+import { COLORS } from "../../utils/constants";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import { List } from "antd";
 import { connect } from "react-redux";
@@ -55,7 +57,18 @@ function RecordList({ records, enabled, month, category }: List) {
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
-          <List.Item>
+          <List.Item
+            actions={[
+              <EditOutlined
+                style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
+                key="edit-item"
+              ></EditOutlined>,
+              <DeleteOutlined
+                style={{ color: "#f5222d", cursor: "pointer" }}
+                key="delete-item"
+              ></DeleteOutlined>,
+            ]}
+          >
             <List.Item.Meta
               title={item.title}
               description={

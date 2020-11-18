@@ -11,7 +11,7 @@ function Diagram() {
       <SideMenu selected={4}></SideMenu>
       <Layout className="site-layout">
         <Header></Header>
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "3px 16px" }}>
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360, marginTop: 30 }}
