@@ -9,6 +9,9 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Redirect } from "react-router-dom";
+import { Dispatch } from "redux";
+import { connect } from "react-redux";
+import { CLEAR_RECORD, ClearRecord } from "../actions/ModalAction";
 
 const StyledWord = styled.div`
   color: white;
@@ -21,9 +24,10 @@ const StyledWord = styled.div`
 
 interface MenuProps {
   selected: number;
+  clearRecord?: any;
 }
 
-function SideMenu({ selected }: MenuProps) {
+function SideMenu({ selected, clearRecord }: MenuProps) {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [path, setPath] = useState("");
@@ -37,6 +41,7 @@ function SideMenu({ selected }: MenuProps) {
   const handleMenuItemClick = (route: string) => {
     if (UrlParam !== route) {
       setPath(`/${route}`);
+      clearRecord();
     }
   };
 
@@ -96,4 +101,15 @@ function SideMenu({ selected }: MenuProps) {
   );
 }
 
-export default SideMenu;
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    clearRecord() {
+      const action: ClearRecord = {
+        type: CLEAR_RECORD,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatch)(SideMenu);
