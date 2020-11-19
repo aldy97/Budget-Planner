@@ -30,6 +30,7 @@ export interface Record {
   createdOn: string;
   updatedOn: string;
   _id: string;
+  recordDate: string;
 }
 
 interface ContentProps {

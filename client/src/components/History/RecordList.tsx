@@ -117,7 +117,10 @@ function RecordList({
                 </div>
               }
             />
-            <div style={{ marginRight: 30, color: "#8c8c8c" }}>${item.amount}</div>
+            <div style={{ marginRight: 30, color: "#8c8c8c" }}>
+              <div>${item.amount}</div>
+              <div>{item.recordDate}</div>
+            </div>
           </List.Item>
         )}
       />
