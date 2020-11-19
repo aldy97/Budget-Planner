@@ -1,5 +1,6 @@
 import React from "react";
 import TitleInput from "./TitleInput";
+import DateInput from "./RecordDateInput";
 import TypeInput from "./TypeInput";
 import CategoryInput from "./CategoryInput";
 import AmountInput from "./AmountInput";
@@ -21,6 +22,7 @@ function RecordInput({ updateDescToRedux }: RecordInputProps) {
   return (
     <Space size="middle" direction="vertical">
       <TitleInput></TitleInput>
+      <DateInput></DateInput>
       <TypeInput></TypeInput>
       <CategoryInput></CategoryInput>
       <AmountInput></AmountInput>

@@ -1,5 +1,6 @@
 import {
   UPDATE_TITLE,
+  UPDATE_RECORD_DATE,
   UPDATE_RECORD_TYPE,
   UPDATE_CATEGORY,
   UPDATE_AMOUNT,
@@ -10,6 +11,7 @@ import {
 
 export interface ModalReducerProps {
   title: string;
+  recordDate: string;
   recordType: string;
   category: string;
   amount: number;
@@ -18,6 +20,7 @@ export interface ModalReducerProps {
 
 const initialState: ModalReducerProps = {
   title: "",
+  recordDate: "2020-11-19",
   recordType: "expense",
   category: "",
   amount: 0,
@@ -46,6 +49,9 @@ export const ModalReducer = (
     }
     case CLEAR_RECORD: {
       return initialState;
+    }
+    case UPDATE_RECORD_DATE: {
+      return { ...state, recordDate: action.recordDate };
     }
     default:
       return state;

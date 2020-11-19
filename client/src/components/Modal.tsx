@@ -15,6 +15,7 @@ interface ModalProps {
   setVisible: any;
   user?: string;
   title?: string;
+  recordDate?: string;
   type?: string;
   category?: string;
   amount?: number;
@@ -28,6 +29,7 @@ function AddRecordModal({
   setVisible,
   user,
   title,
+  recordDate,
   type,
   category,
   amount,
@@ -51,6 +53,7 @@ function AddRecordModal({
     const request = {
       title,
       user,
+      recordDate,
       type,
       category,
       amount,
@@ -94,6 +97,7 @@ const mapState = (state: RootState) => {
   return {
     user: state.HomeReducer.uid,
     title: state.ModalReducer.title,
+    recordDate: state.ModalReducer.recordDate,
     type: state.ModalReducer.recordType,
     category: state.ModalReducer.category,
     amount: state.ModalReducer.amount,

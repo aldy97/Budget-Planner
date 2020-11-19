@@ -14,6 +14,7 @@ const createRecord = async (req: AugmentedRequest, res: Response) => {
   const description: string = req.body.description
     ? req.body.description
     : 'No description';
+  const recordDate: string = req.body.recordDate;
 
   const recordInfo: IRecord = {
     title,
@@ -22,6 +23,7 @@ const createRecord = async (req: AugmentedRequest, res: Response) => {
     category,
     amount,
     description,
+    recordDate,
   };
 
   try {

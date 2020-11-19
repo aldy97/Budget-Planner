@@ -17,6 +17,7 @@ export interface IRecord {
   category: string;
   amount: number;
   description?: string;
+  recordDate: string;
   createdOn?: Date;
   updatedOn?: Date;
 }
@@ -30,6 +31,10 @@ const recordSchema = new instance.Schema({
   category: { type: String, required: [true, 'A record must have a category'] },
   amount: { type: Number, required: [true, 'A record must have an amount'] },
   description: { type: String, default: 'No description' },
+  recordDate: {
+    type: String,
+    required: [true, 'A record must have a date on which it happens'],
+  },
   createdOn: { type: Date, default: moment().format('YYYY-MM-DD') },
   updatedOn: { type: Date, default: moment().format('YYYY-MM-DD') },
 });

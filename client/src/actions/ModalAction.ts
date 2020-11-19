@@ -1,4 +1,5 @@
 export const UPDATE_TITLE = "update_title";
+export const UPDATE_RECORD_DATE = "update_record_date";
 export const UPDATE_RECORD_TYPE = "update_record_type";
 export const UPDATE_CATEGORY = "update_category";
 export const UPDATE_AMOUNT = "update_amount";
@@ -8,6 +9,11 @@ export const CLEAR_RECORD = "clear_record";
 export interface UpdateTitle {
   type: typeof UPDATE_TITLE;
   title: string;
+}
+
+export interface UpdateRecordDate {
+  type: typeof UPDATE_RECORD_DATE;
+  recordDate: string;
 }
 
 export interface UpdateType {
@@ -40,4 +46,5 @@ export type ModalAction =
   | UpdateDescription
   | UpdateTitle
   | UpdateType
-  | ClearRecord;
+  | ClearRecord
+  | UpdateRecordDate;
