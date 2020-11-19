@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   UPDATE_TITLE,
   UPDATE_RECORD_DATE,
@@ -20,7 +21,7 @@ export interface ModalReducerProps {
 
 const initialState: ModalReducerProps = {
   title: "",
-  recordDate: "2020-11-19",
+  recordDate: moment().format("YYYY-MM-DD"),
   recordType: "expense",
   category: "",
   amount: 0,

@@ -14,7 +14,7 @@ function TitleInput({ updateTitleToRedux, title }: TitleInputProps) {
   const handleInputChange = (e: any) => {
     updateTitleToRedux(e.target.value);
   };
-  return <Input onChange={handleInputChange} placeholder="Record title"></Input>;
+  return <Input onChange={handleInputChange} placeholder="Title (optional)"></Input>;
 }
 
 const mapState = (state: RootState) => {
