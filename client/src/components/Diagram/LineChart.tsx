@@ -33,7 +33,7 @@ function LineChart({ type, records }: LineChartProps) {
     if (records) {
       const filteredRecords = records.filter(record => record.type === type);
       for (const record of filteredRecords) {
-        const date = record.createdOn.slice(5, 10);
+        const date = record.recordDate.slice(5, 10);
         if (days.includes(date)) {
           tempTotalsInPastWeek[days.indexOf(date)] += record.amount;
         }

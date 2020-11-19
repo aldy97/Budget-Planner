@@ -63,6 +63,10 @@ function AddRecordModal({
       message.warn("Please choose a category");
       return;
     }
+    if (!recordDate) {
+      message.warn("please choose a date");
+      return;
+    }
     const response = await axios.post("/api/createRecord", request);
     setVisible(false);
     if (response.data.status) {

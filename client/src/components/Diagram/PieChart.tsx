@@ -33,7 +33,7 @@ function PieChart({ type, records }: PieChartProps) {
     const tempData = new Map<string, number>();
     const tempCategories: string[] = [];
     for (const record of filteredRecords) {
-      const date = record.createdOn.slice(5, 10);
+      const date = record.recordDate.slice(5, 10);
       if (days.includes(date) && !tempCategories.includes(record.category)) {
         tempCategories.push(record.category);
         tempData.set(record.category, record.amount);

@@ -39,14 +39,14 @@ function RecordList({
           ? records.filter(
               record =>
                 record.category === category &&
-                record.createdOn.slice(0, 7) === month
+                record.recordDate.slice(0, 7) === month
             )
           : [];
       } else if (!month && !category) {
         modifiedRecord = records ? records : [];
       } else if (month && month !== "") {
         modifiedRecord = records
-          ? records.filter(record => record.createdOn.slice(0, 7) === month)
+          ? records.filter(record => record.recordDate.slice(0, 7) === month)
           : [];
       } else {
         modifiedRecord = records
