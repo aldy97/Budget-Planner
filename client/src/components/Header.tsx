@@ -5,14 +5,17 @@ import { Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
 import { connect } from "react-redux";
+import { ClearRecord, CLEAR_RECORD } from "../actions/ModalAction";
 import { RootState } from "../reducers/index";
+import { Dispatch } from "redux";
 import { Redirect } from "react-router-dom";
 
 interface HeaderProps {
   name?: string;
+  clearModal?: any;
 }
 
-function Header({ name }: HeaderProps) {
+function Header({ name, clearModal }: HeaderProps) {
   const { Header } = Layout;
   const [visivle, setVisible] = useState(false);
   const [isLogOut, setIsLogOut] = useState(false);
@@ -21,6 +24,7 @@ function Header({ name }: HeaderProps) {
     <Header className="site-layout-background">
       <Button
         onClick={() => {
+          clearModal();
           setVisible(true);
         }}
         type="primary"
@@ -34,7 +38,7 @@ function Header({ name }: HeaderProps) {
       <div style={{ float: "right", marginRight: -33 }}>
         <UserDropDown name={name as string}></UserDropDown>
       </div>
-      <Modal useage="create" visible={visivle} setVisible={setVisible}></Modal>
+      <Modal visible={visivle} setVisible={setVisible}></Modal>
     </Header>
   ) : (
     <Redirect to="/"> </Redirect>
@@ -47,4 +51,15 @@ const mapState = (state: RootState) => {
   };
 };
 
-export default connect(mapState, null)(Header);
+const mapDispatch = (dispatch: Dispatch) => {
+  return {
+    clearModal() {
+      const action: ClearRecord = {
+        type: CLEAR_RECORD,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(mapState, mapDispatch)(Header);
