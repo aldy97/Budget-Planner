@@ -8,6 +8,7 @@ import {
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { UPDATE_RECORD_ID, UpdateRecordID } from "../actions/EditModallAction";
 import { Redirect } from "react-router-dom";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
@@ -25,9 +26,10 @@ const StyledWord = styled.div`
 interface MenuProps {
   selected: number;
   clearRecord?: any;
+  resetRecordID?: any;
 }
 
-function SideMenu({ selected, clearRecord }: MenuProps) {
+function SideMenu({ selected, clearRecord, resetRecordID }: MenuProps) {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const [path, setPath] = useState("");
@@ -42,6 +44,7 @@ function SideMenu({ selected, clearRecord }: MenuProps) {
     if (UrlParam !== route) {
       setPath(`/${route}`);
       clearRecord();
+      resetRecordID();
     }
   };
 
@@ -106,6 +109,13 @@ const mapDispatch = (dispatch: Dispatch) => {
     clearRecord() {
       const action: ClearRecord = {
         type: CLEAR_RECORD,
+      };
+      dispatch(action);
+    },
+    resetRecordID() {
+      const action: UpdateRecordID = {
+        type: UPDATE_RECORD_ID,
+        recordID: "",
       };
       dispatch(action);
     },

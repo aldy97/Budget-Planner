@@ -1,4 +1,3 @@
-export const UPDATE_RECORD_ID = "update_record_id";
 export const SWITCH_TO_UPDATE = "switch_to_update";
 export const UPDATE_TITLE = "update_title";
 export const UPDATE_RECORD_DATE = "update_record_date";
@@ -12,12 +11,6 @@ export const CLEAR_RECORD = "clear_record";
 export interface SwitchToUpdate {
   type: typeof SWITCH_TO_UPDATE;
   update: boolean;
-}
-
-// this action is used when a record needs to be updated
-export interface UpdateRecordID {
-  type: typeof UPDATE_RECORD_ID;
-  recordID: string;
 }
 
 export interface UpdateTitle {
@@ -56,7 +49,6 @@ export interface ClearRecord {
 
 export type ModalAction =
   | SwitchToUpdate
-  | UpdateRecordID
   | UpdateAmount
   | UpdateCategory
   | UpdateDescription

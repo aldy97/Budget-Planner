@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Tag from "../Overview/CategoryTag";
+import ListItemMeta from "./ListItemMeta";
 import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
 import { List, message, Popconfirm } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
-import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/ModalAction";
+import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/EditModallAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
 
 interface List {
   records?: Record[];
+  recordID?: string;
   enabled?: boolean;
   month?: string;
   category?: string;
@@ -23,6 +24,7 @@ interface List {
 
 function RecordList({
   records,
+  recordID,
   enabled,
   month,
   category,
@@ -82,8 +84,13 @@ function RecordList({
     }
   };
 
+  // 如果item未被选中，点击修改会选中该item，如果以被选中则发送请求更新数据库
   const handleEditBtnClick = (record: Record) => {
-    updateRecordIDToRedux(record._id);
+    if (recordID !== record._id) {
+      updateRecordIDToRedux(record._id);
+    } else {
+      // TODO: 发送请求
+    }
   };
 
   return (
@@ -118,19 +125,7 @@ function RecordList({
               </Popconfirm>,
             ]}
           >
-            <List.Item.Meta
-              title={item.title}
-              description={
-                <div>
-                  <Tag type={item.type} category={item.category}></Tag>
-                  <div>{item.description}</div>
-                </div>
-              }
-            />
-            <div style={{ marginRight: 30, color: "#8c8c8c" }}>
-              <div>${item.amount}</div>
-              <div>{item.recordDate}</div>
-            </div>
+            <ListItemMeta item={item}></ListItemMeta>
           </List.Item>
         )}
       />
@@ -145,6 +140,7 @@ const mapState = (state: RootState) => {
     enabled: state.FilterReducer.enabled,
     month: state.FilterReducer.month,
     category: state.FilterReducer.category,
+    recordID: state.EditModalReducer.recordID,
   };
 };
 
