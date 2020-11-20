@@ -85,7 +85,7 @@ function AddRecordModal({
   return (
     <>
       <Modal
-        title="Fill out record details"
+        title={"Fill out record details"}
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}

@@ -28,6 +28,7 @@ function RecordList({
   user,
 }: List) {
   const [data, setData] = useState<Record[]>([]);
+  const [visivle, setVisible] = useState(false);
 
   const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];

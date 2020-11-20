@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddRecordModal from "./Modal";
+import Modal from "./Modal";
 import UserDropDown from "./UserDropDown";
 import { Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
@@ -34,7 +34,7 @@ function Header({ name }: HeaderProps) {
       <div style={{ float: "right", marginRight: -33 }}>
         <UserDropDown name={name as string}></UserDropDown>
       </div>
-      <AddRecordModal visible={visivle} setVisible={setVisible}></AddRecordModal>
+      <Modal visible={visivle} setVisible={setVisible}></Modal>
     </Header>
   ) : (
     <Redirect to="/"> </Redirect>
