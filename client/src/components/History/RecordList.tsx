@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Tag from "../Overview/CategoryTag";
-import Modal from "../Modal";
 import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
 import { List, message, Popconfirm } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
-import {
-  UPDATE_RECORD_ID,
-  UpdateRecordID,
-  SWITCH_TO_UPDATE,
-  SwitchToUpdate,
-} from "../../actions/ModalAction";
+import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/ModalAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
@@ -25,7 +19,6 @@ interface List {
   updateRecordsToRedux?: any;
   updateRecordIDToRedux?: any;
   user?: any;
-  switchModalToUpdate?: any;
 }
 
 function RecordList({
@@ -35,11 +28,9 @@ function RecordList({
   category,
   updateRecordsToRedux,
   updateRecordIDToRedux,
-  switchModalToUpdate,
   user,
 }: List) {
   const [data, setData] = useState<Record[]>([]);
-  const [visivle, setVisible] = useState(false);
 
   const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];
@@ -92,9 +83,7 @@ function RecordList({
   };
 
   const handleEditBtnClick = (record: Record) => {
-    switchModalToUpdate(true);
     updateRecordIDToRedux(record._id);
-    setVisible(true);
   };
 
   return (
@@ -145,7 +134,6 @@ function RecordList({
           </List.Item>
         )}
       />
-      <Modal visible={visivle} setVisible={setVisible}></Modal>
     </>
   );
 }
@@ -173,13 +161,6 @@ const mapDispatch = (dispatch: Dispatch) => {
       const action: UpdateRecordID = {
         type: UPDATE_RECORD_ID,
         recordID,
-      };
-      dispatch(action);
-    },
-    switchModalToUpdate(update: boolean) {
-      const action: SwitchToUpdate = {
-        type: SWITCH_TO_UPDATE,
-        update,
       };
       dispatch(action);
     },

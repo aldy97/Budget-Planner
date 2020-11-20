@@ -1,6 +1,5 @@
 import moment from "moment";
 import {
-  SWITCH_TO_UPDATE,
   UPDATE_RECORD_ID,
   UPDATE_TITLE,
   UPDATE_RECORD_DATE,
@@ -13,7 +12,6 @@ import {
 } from "../actions/ModalAction";
 
 export interface ModalReducerProps {
-  update: boolean;
   recordID: string;
   title: string;
   recordDate: string;
@@ -24,7 +22,6 @@ export interface ModalReducerProps {
 }
 
 const initialState: ModalReducerProps = {
-  update: false,
   recordID: "",
   title: "",
   recordDate: moment().format("YYYY-MM-DD"),
@@ -39,9 +36,6 @@ export const ModalReducer = (
   action: ModalAction
 ): ModalReducerProps => {
   switch (action.type) {
-    case SWITCH_TO_UPDATE: {
-      return { ...state, update: action.update };
-    }
     case UPDATE_RECORD_ID: {
       return { ...state, recordID: action.recordID };
     }

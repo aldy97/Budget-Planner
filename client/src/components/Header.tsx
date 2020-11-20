@@ -5,17 +5,14 @@ import { Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
 import { connect } from "react-redux";
-import { ClearRecord, CLEAR_RECORD } from "../actions/ModalAction";
 import { RootState } from "../reducers/index";
-import { Dispatch } from "redux";
 import { Redirect } from "react-router-dom";
 
 interface HeaderProps {
   name?: string;
-  clearModal?: any;
 }
 
-function Header({ name, clearModal }: HeaderProps) {
+function Header({ name }: HeaderProps) {
   const { Header } = Layout;
   const [visivle, setVisible] = useState(false);
   const [isLogOut, setIsLogOut] = useState(false);
@@ -24,7 +21,6 @@ function Header({ name, clearModal }: HeaderProps) {
     <Header className="site-layout-background">
       <Button
         onClick={() => {
-          clearModal();
           setVisible(true);
         }}
         type="primary"
@@ -51,15 +47,4 @@ const mapState = (state: RootState) => {
   };
 };
 
-const mapDispatch = (dispatch: Dispatch) => {
-  return {
-    clearModal() {
-      const action: ClearRecord = {
-        type: CLEAR_RECORD,
-      };
-      dispatch(action);
-    },
-  };
-};
-
-export default connect(mapState, mapDispatch)(Header);
+export default connect(mapState, null)(Header);

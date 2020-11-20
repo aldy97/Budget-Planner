@@ -11,7 +11,6 @@ import { Dispatch } from "redux";
 import { RootState } from "../reducers/index";
 
 interface ModalProps {
-  update?: boolean;
   visible: boolean;
   setVisible: any;
   user?: string;
@@ -26,7 +25,6 @@ interface ModalProps {
 }
 
 function AddRecordModal({
-  update,
   visible,
   setVisible,
   user,
@@ -87,7 +85,7 @@ function AddRecordModal({
   return (
     <>
       <Modal
-        title={update ? "Edit this record" : "Fill out record details"}
+        title="Edit this record"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
@@ -102,7 +100,6 @@ function AddRecordModal({
 const mapState = (state: RootState) => {
   return {
     user: state.HomeReducer.uid,
-    update: state.ModalReducer.update,
     title: state.ModalReducer.title,
     recordDate: state.ModalReducer.recordDate,
     type: state.ModalReducer.recordType,
