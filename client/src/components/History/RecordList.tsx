@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ListItemMeta from "./ListItemMeta";
 import { COLORS } from "../../utils/constants";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
-import { List, message, Popconfirm } from "antd";
+import { List, message, Popconfirm, Button } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
 import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/EditModallAction";
 import { connect } from "react-redux";
@@ -84,12 +84,12 @@ function RecordList({
     }
   };
 
-  // 如果item未被选中，点击修改会选中该item，如果以被选中则发送请求更新数据库
+  // 如果item未被选中，点击修改会选中该item
   const handleEditBtnClick = (record: Record) => {
     if (recordID !== record._id) {
       updateRecordIDToRedux(record._id);
     } else {
-      // TODO: 发送请求
+      updateRecordIDToRedux("");
     }
   };
 
@@ -109,6 +109,22 @@ function RecordList({
                 style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
                 key="edit-item"
               ></EditOutlined>,
+              <Button
+                disabled={recordID !== item._id}
+                type="primary"
+                key="confirm-edit"
+                size="small"
+              >
+                Confirm Edit
+              </Button>,
+              // <CheckOutlined
+              //   key="confirm-edit"
+              //   style={{
+              //     color: recordID === item._id ? "#389e0d" : "#8c8c8c",
+              //     fontWeight: "bolder",
+              //     cursor: "pointer",
+              //   }}
+              // />,
               <Popconfirm
                 key="delete-item"
                 placement="topLeft"
