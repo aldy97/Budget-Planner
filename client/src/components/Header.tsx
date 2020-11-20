@@ -34,7 +34,7 @@ function Header({ name }: HeaderProps) {
       <div style={{ float: "right", marginRight: -33 }}>
         <UserDropDown name={name as string}></UserDropDown>
       </div>
-      <Modal visible={visivle} setVisible={setVisible}></Modal>
+      <Modal useage="create" visible={visivle} setVisible={setVisible}></Modal>
     </Header>
   ) : (
     <Redirect to="/"> </Redirect>

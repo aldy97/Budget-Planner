@@ -11,6 +11,7 @@ import { Dispatch } from "redux";
 import { RootState } from "../reducers/index";
 
 interface ModalProps {
+  useage: "create" | "update";
   visible: boolean;
   setVisible: any;
   user?: string;
@@ -25,6 +26,7 @@ interface ModalProps {
 }
 
 function AddRecordModal({
+  useage,
   visible,
   setVisible,
   user,
@@ -85,7 +87,9 @@ function AddRecordModal({
   return (
     <>
       <Modal
-        title={"Fill out record details"}
+        title={
+          useage === "create" ? "Fill out record details" : "Update this record"
+        }
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}

@@ -6,6 +6,7 @@ import { Record } from "../Overview/Content";
 import axios from "axios";
 import { List, message, Popconfirm } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
+import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/ModalAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
@@ -16,6 +17,7 @@ interface List {
   month?: string;
   category?: string;
   updateRecordsToRedux?: any;
+  updateRecordIDToRedux?: any;
   user?: any;
 }
 
@@ -25,6 +27,7 @@ function RecordList({
   month,
   category,
   updateRecordsToRedux,
+  updateRecordIDToRedux,
   user,
 }: List) {
   const [data, setData] = useState<Record[]>([]);
@@ -80,6 +83,10 @@ function RecordList({
     }
   };
 
+  const handleEditBtnClick = (record: Record) => {
+    updateRecordIDToRedux(record._id);
+  };
+
   return (
     <>
       <List
@@ -90,6 +97,9 @@ function RecordList({
           <List.Item
             actions={[
               <EditOutlined
+                onClick={() => {
+                  handleEditBtnClick(item);
+                }}
                 style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
                 key="edit-item"
               ></EditOutlined>,
@@ -145,6 +155,13 @@ const mapDispatch = (dispatch: Dispatch) => {
       const action: UpdateRecords = {
         type: UPDATE_RECORDS,
         records,
+      };
+      dispatch(action);
+    },
+    updateRecordIDToRedux(recordID: string) {
+      const action: UpdateRecordID = {
+        type: UPDATE_RECORD_ID,
+        recordID,
       };
       dispatch(action);
     },
