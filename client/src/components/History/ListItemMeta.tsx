@@ -57,6 +57,7 @@ function ListItemMeta({
         title={
           recordID === item._id ? (
             <Input
+              allowClear
               onChange={handleTitleChange}
               size="small"
               style={{ width: 100 }}
@@ -99,6 +100,7 @@ function ListItemMeta({
           {recordID === item._id ? (
             <DatePicker
               onChange={handleDateChange}
+              allowClear={false}
               defaultValue={moment(item.recordDate)}
               size="small"
             ></DatePicker>
