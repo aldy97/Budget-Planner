@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from "react";
 import ListItemMeta from "./ListItemMeta";
 import { COLORS } from "../../utils/constants";
-import { EditOutlined, DeleteOutlined, CheckOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
 import { List, message, Popconfirm, Button } from "antd";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
-import { UPDATE_RECORD_ID, UpdateRecordID } from "../../actions/EditModallAction";
+import {
+  UPDATE_RECORD_ID,
+  UpdateRecordID,
+  EDIT_TITLE,
+  EditTitle,
+  EditDescription,
+  EDIT_DESCRIPTION,
+  EditAmount,
+  EDIT_AMOUNT,
+  EditRecordDate,
+  EDIT_RECORD_DATE,
+} from "../../actions/EditModallAction";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
@@ -19,7 +30,12 @@ interface List {
   category?: string;
   updateRecordsToRedux?: any;
   updateRecordIDToRedux?: any;
+  updateTitleToRedux?: any;
+  updateDescToRedux?: any;
+  updateAmountToRedux?: any;
+  updateDateToRedux?: any;
   user?: any;
+  recordTitle?: string;
 }
 
 function RecordList({
@@ -30,7 +46,12 @@ function RecordList({
   category,
   updateRecordsToRedux,
   updateRecordIDToRedux,
+  updateTitleToRedux,
+  updateDescToRedux,
+  updateAmountToRedux,
+  updateDateToRedux,
   user,
+  recordTitle,
 }: List) {
   const [data, setData] = useState<Record[]>([]);
 
@@ -84,13 +105,26 @@ function RecordList({
     }
   };
 
-  // 如果item未被选中，点击修改会选中该item
+  // 如果item未被选中，点击修改会选中该item并把item信息更新到redux
   const handleEditBtnClick = (record: Record) => {
     if (recordID !== record._id) {
       updateRecordIDToRedux(record._id);
+      updateTitleToRedux(record.title);
+      updateDescToRedux(record.description);
+      updateAmountToRedux(record.amount);
+      updateDateToRedux(record.recordDate);
     } else {
       updateRecordIDToRedux("");
     }
+  };
+
+  const handleConfirmEditBtnClick = async () => {
+    const request = { _id: recordID, updatedFields: { title: recordTitle } };
+    console.log(request);
+    const response = await axios.put("/api/updateRecord", request);
+    console.log(response);
+    updateRecordIDToRedux("");
+    updateAllRecordsToRedux();
   };
 
   return (
@@ -114,17 +148,10 @@ function RecordList({
                 type="primary"
                 key="confirm-edit"
                 size="small"
+                onClick={handleConfirmEditBtnClick}
               >
                 Confirm Edit
               </Button>,
-              // <CheckOutlined
-              //   key="confirm-edit"
-              //   style={{
-              //     color: recordID === item._id ? "#389e0d" : "#8c8c8c",
-              //     fontWeight: "bolder",
-              //     cursor: "pointer",
-              //   }}
-              // />,
               <Popconfirm
                 key="delete-item"
                 placement="topLeft"
@@ -157,6 +184,7 @@ const mapState = (state: RootState) => {
     month: state.FilterReducer.month,
     category: state.FilterReducer.category,
     recordID: state.EditModalReducer.recordID,
+    recordTitle: state.EditModalReducer.title,
   };
 };
 
@@ -173,6 +201,34 @@ const mapDispatch = (dispatch: Dispatch) => {
       const action: UpdateRecordID = {
         type: UPDATE_RECORD_ID,
         recordID,
+      };
+      dispatch(action);
+    },
+    updateTitleToRedux(title: string) {
+      const action: EditTitle = {
+        type: EDIT_TITLE,
+        title,
+      };
+      dispatch(action);
+    },
+    updateDescToRedux(description: string) {
+      const action: EditDescription = {
+        type: EDIT_DESCRIPTION,
+        description,
+      };
+      dispatch(action);
+    },
+    updateAmountToRedux(amount: number) {
+      const action: EditAmount = {
+        type: EDIT_AMOUNT,
+        amount,
+      };
+      dispatch(action);
+    },
+    updateDateToRedux(date: string) {
+      const action: EditRecordDate = {
+        type: EDIT_RECORD_DATE,
+        date,
       };
       dispatch(action);
     },

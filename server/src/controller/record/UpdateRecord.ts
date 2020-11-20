@@ -38,7 +38,7 @@ const updateRecord = async (req: Request, res: Response) => {
 
   const updatedRecord: RecordDocument = await Record.findOneAndUpdate(
     { _id },
-    { amount: 500 },
+    updatedFields,
     {
       new: true,
       runValidators: true,
