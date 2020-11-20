@@ -5,9 +5,6 @@ import { ServerError } from '../../util/utils';
 
 const updateRecord = async (req: Request, res: Response) => {
   const { _id, updatedFields } = req.body;
-  console.log(req.body);
-  console.log(_id);
-  console.log(updatedFields, { amount: 500 });
 
   if (!_id) {
     res.send({ status: false, message: MESSAGES.UNEXPECTED_ERROR });

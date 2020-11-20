@@ -36,6 +36,8 @@ interface List {
   updateDateToRedux?: any;
   user?: any;
   recordTitle?: string;
+  amount?: number;
+  recordDate?: string;
 }
 
 function RecordList({
@@ -52,6 +54,8 @@ function RecordList({
   updateDateToRedux,
   user,
   recordTitle,
+  amount,
+  recordDate,
 }: List) {
   const [data, setData] = useState<Record[]>([]);
 
@@ -119,12 +123,18 @@ function RecordList({
   };
 
   const handleConfirmEditBtnClick = async () => {
-    const request = { _id: recordID, updatedFields: { title: recordTitle } };
-    console.log(request);
+    const request = {
+      _id: recordID,
+      updatedFields: { title: recordTitle, amount, recordDate },
+    };
     const response = await axios.put("/api/updateRecord", request);
-    console.log(response);
     updateRecordIDToRedux("");
     updateAllRecordsToRedux();
+    if (response.data.status) {
+      message.success(response.data.message);
+    } else {
+      message.error(response.data.message);
+    }
   };
 
   return (
@@ -185,6 +195,8 @@ const mapState = (state: RootState) => {
     category: state.FilterReducer.category,
     recordID: state.EditModalReducer.recordID,
     recordTitle: state.EditModalReducer.title,
+    amount: state.EditModalReducer.amount,
+    recordDate: state.EditModalReducer.date,
   };
 };
 
