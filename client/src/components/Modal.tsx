@@ -85,7 +85,7 @@ function AddRecordModal({
   return (
     <>
       <Modal
-        title="Edit this record"
+        title="Please fill record details"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
