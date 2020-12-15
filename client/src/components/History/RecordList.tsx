@@ -23,22 +23,22 @@ import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
 
 interface List {
-  records?: Record[];
-  recordID?: string;
-  enabled?: boolean;
-  month?: string;
-  category?: string;
-  updateRecordsToRedux?: any;
-  updateRecordIDToRedux?: any;
-  updateTitleToRedux?: any;
-  updateDescToRedux?: any;
-  updateAmountToRedux?: any;
-  updateDateToRedux?: any;
-  user?: any;
-  recordTitle?: string;
-  amount?: number;
-  recordDate?: string;
-  description?: string;
+  records: Record[];
+  recordID: string;
+  enabled: boolean;
+  month: string;
+  category: string;
+  updateRecordsToRedux: (records: Record[]) => void;
+  updateRecordIDToRedux: (id: string) => void;
+  updateTitleToRedux: (title: string) => void;
+  updateDescToRedux: (desc: string) => void;
+  updateAmountToRedux: (amount: number) => void;
+  updateDateToRedux: (date: string) => void;
+  user: any;
+  recordTitle: string;
+  amount: number;
+  recordDate: string;
+  description: string;
 }
 
 function RecordList({
@@ -64,30 +64,25 @@ function RecordList({
   const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];
     if (!enabled) {
-      modifiedRecord = records ? records : [];
+      modifiedRecord = records;
     } else {
       if (month && category && month !== "" && category !== "") {
-        modifiedRecord = records
-          ? records.filter(
-              record =>
-                record.category === category &&
-                record.recordDate.slice(0, 7) === month
-            )
-          : [];
+        modifiedRecord = records.filter(
+          record =>
+            record.category === category && record.recordDate.slice(0, 7) === month
+        );
       } else if (!month && !category) {
-        modifiedRecord = records ? records : [];
+        modifiedRecord = records;
       } else if (month && month !== "") {
-        modifiedRecord = records
-          ? records.filter(record => record.recordDate.slice(0, 7) === month)
-          : [];
+        modifiedRecord = records.filter(
+          record => record.recordDate.slice(0, 7) === month
+        );
       } else {
-        modifiedRecord = records
-          ? records.filter(record => record.category === category)
-          : [];
+        modifiedRecord = records.filter(record => record.category === category);
       }
     }
     // caution: update state only at the top level
-    setData(modifiedRecord.reverse());
+    setData(modifiedRecord);
   };
 
   useEffect(() => {
@@ -220,42 +215,42 @@ const mapState = (state: RootState) => {
 
 const mapDispatch = (dispatch: Dispatch) => {
   return {
-    updateRecordsToRedux(records: Record[]) {
+    updateRecordsToRedux(records: Record[]): void {
       const action: UpdateRecords = {
         type: UPDATE_RECORDS,
         records,
       };
       dispatch(action);
     },
-    updateRecordIDToRedux(recordID: string) {
+    updateRecordIDToRedux(recordID: string): void {
       const action: UpdateRecordID = {
         type: UPDATE_RECORD_ID,
         recordID,
       };
       dispatch(action);
     },
-    updateTitleToRedux(title: string) {
+    updateTitleToRedux(title: string): void {
       const action: EditTitle = {
         type: EDIT_TITLE,
         title,
       };
       dispatch(action);
     },
-    updateDescToRedux(description: string) {
+    updateDescToRedux(description: string): void {
       const action: EditDescription = {
         type: EDIT_DESCRIPTION,
         description,
       };
       dispatch(action);
     },
-    updateAmountToRedux(amount: number) {
+    updateAmountToRedux(amount: number): void {
       const action: EditAmount = {
         type: EDIT_AMOUNT,
         amount,
       };
       dispatch(action);
     },
-    updateDateToRedux(date: string) {
+    updateDateToRedux(date: string): void {
       const action: EditRecordDate = {
         type: EDIT_RECORD_DATE,
         date,
