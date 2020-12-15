@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import { UPDATE_BUDGET, UpdateBudget } from "../../actions/AccountAction";
 import {
   UPDATE_USER_EMAIL,
   UpdateEmail,
@@ -24,9 +25,15 @@ interface LoginFormProps {
   updateEmail?: any;
   updateUserID?: any;
   updateName?: any;
+  updateBudget: (budget: number) => void;
 }
 
-function LoginForm({ updateEmail, updateUserID, updateName }: LoginFormProps) {
+function LoginForm({
+  updateEmail,
+  updateUserID,
+  updateName,
+  updateBudget,
+}: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,6 +50,7 @@ function LoginForm({ updateEmail, updateUserID, updateName }: LoginFormProps) {
       updateUserID(response.data.uid);
       updateName(response.data.name);
       setIsLogin(true);
+      updateBudget(response.data.budget);
     } else {
       message.error(messageText);
     }
@@ -100,6 +108,13 @@ const mapDispatch = (dispatch: Dispatch) => {
     },
     updateName(name: string) {
       const action: UpdateName = { type: UPDATE_USER_NAME, name };
+      dispatch(action);
+    },
+    updateBudget(budget: number) {
+      const action: UpdateBudget = {
+        type: UPDATE_BUDGET,
+        budget,
+      };
       dispatch(action);
     },
   };

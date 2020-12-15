@@ -3,6 +3,7 @@ export const MESSAGES = {
   DEL_RECORD_SUCC: 'Record is deleted successfully!',
   ADD_RECORD_SUCC: 'Record is added successfully!',
   UPDATE_RECORD_SUCC: 'Record is updated successfully',
+  UPDATE_USERINFO_SUCC: 'User information is updated successfully',
   COMMENT_ID_NOT_FOUND: 'Comment id does not exist',
   COMMENT_ID_NOT_PROVIDED: 'Please provide comment id',
   CONFIRM_PASSWORD_EMPTY: 'Please confirm your password.',

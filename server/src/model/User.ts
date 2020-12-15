@@ -12,6 +12,7 @@ export interface IUser {
   confirmPassword?: string;
   createdOn?: Date;
   updatedOn?: Date;
+  budget?: number;
 }
 
 export type UserDocument = mongoose.Document & IUser;
@@ -32,6 +33,7 @@ const userSchema = new instance.Schema({
   },
   createdOn: { type: Date, default: Date.now },
   updatedOn: { type: Date, default: Date.now },
+  budget: { type: Number, default: 0 },
 });
 
 export const User = instance.model<UserDocument>('User', userSchema);

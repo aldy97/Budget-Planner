@@ -20,7 +20,12 @@ const checkLogin = async (request: Request, response: Response) => {
   if (!user) {
     response.json({ login: false, message: MESSAGES.WRONG_CREDENTIALS });
   } else {
-    response.json({ login: true, uid: user._id, name: user.name });
+    response.json({
+      login: true,
+      uid: user._id,
+      name: user.name,
+      budget: user.budget,
+    });
   }
 };
 
