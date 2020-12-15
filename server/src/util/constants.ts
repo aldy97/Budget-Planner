@@ -27,4 +27,4 @@ export const MESSAGES = {
 };
 
 export const MONGODB = 'mongodb://localhost:27017/db';
-export const DEFAULT_PORT = 7001;
+export const DEFAULT_PORT = process.env.Port || 7001;

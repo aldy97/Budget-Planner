@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Input, Space, Button } from "antd";
+import { Layout, Input, Space, Button, message } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
@@ -11,6 +11,11 @@ interface ContenProps {
 
 function Content({ name, email }: ContenProps) {
   const { Content } = Layout;
+
+  const handleConfirmBtnClick = () => {
+    message.info("This feature is under construction");
+  };
+
   return (
     <Content style={{ margin: "4px 16px" }}>
       <div
@@ -46,7 +51,9 @@ function Content({ name, email }: ContenProps) {
               }
             ></Input.Password>
           </div>
-          <Button type="primary">Confirm</Button>
+          <Button onClick={handleConfirmBtnClick} type="primary">
+            Confirm
+          </Button>
         </Space>
       </div>
     </Content>
