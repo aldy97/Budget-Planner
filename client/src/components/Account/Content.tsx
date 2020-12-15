@@ -2,23 +2,40 @@ import React, { useState } from "react";
 import { Layout, Input, Space, Button } from "antd";
 import { message } from "antd";
 import axios from "axios";
-import { UPDATE_BUDGET, UpdateBudget } from "../../actions/AccountAction";
+import {
+  UPDATE_BUDGET,
+  UpdateBudget,
+  UPDATE_BUDGET_THRESHOLD,
+  UpdateBudgetThreshold,
+} from "../../actions/AccountAction";
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import Progress from "./Progress";
 
 interface ContenProps {
-  name?: string;
-  email?: string;
-  id?: string;
-  budget?: number;
+  name: string;
+  email: string;
+  id: string;
+  budget: number;
+  threshold: number;
   updateBudgetToRedux: (budget: number) => void;
+  updateThresholdToRedux: (threshold: number) => void;
 }
 
-function Content({ name, email, id, budget, updateBudgetToRedux }: ContenProps) {
+function Content({
+  name,
+  email,
+  id,
+  budget,
+  threshold,
+  updateBudgetToRedux,
+  updateThresholdToRedux,
+}: ContenProps) {
   const { Content } = Layout;
   const [currBudget, setCurrBudget] = useState(budget as number);
+  const [currThreshold, setCurrThrehold] = useState(threshold);
 
   const handleBudgetChange = (e: any) => {
     setCurrBudget(e.target.value);
@@ -29,11 +46,16 @@ function Content({ name, email, id, budget, updateBudgetToRedux }: ContenProps) 
       message.error("Budget must be greater than 0");
       return;
     }
-    const request = { _id: id, updatedFields: { budget: currBudget } };
+    const request = {
+      _id: id,
+      updatedFields: { budget: currBudget, threshold: currThreshold },
+    };
     const response = await axios.put("/api/updateUserInfo", request);
+    console.log(response.data);
     if (response.data.status) {
       message.success(response.data.message);
       updateBudgetToRedux(response.data.updatedUserInfo.budget as number);
+      updateThresholdToRedux(response.data.updatedUserInfo.threshold);
     } else {
       message.error(response.data.message);
     }
@@ -47,15 +69,15 @@ function Content({ name, email, id, budget, updateBudgetToRedux }: ContenProps) 
       >
         <Space direction="vertical" size="large">
           <div>
-            <div>Name</div>
+            <div>Name:</div>
             <Input defaultValue={name}></Input>
           </div>
           <div>
-            <div>Email</div>
+            <div>Email:</div>
             <Input defaultValue={email} style={{ width: 224 }} disabled></Input>
           </div>
           <div>
-            <div>Set Monthly Budget</div>
+            <div>Set monthly budget:</div>
             <Input
               defaultValue={currBudget}
               prefix="$"
@@ -63,7 +85,7 @@ function Content({ name, email, id, budget, updateBudgetToRedux }: ContenProps) 
               onChange={handleBudgetChange}
             />
           </div>
-          <div>
+          {/* <div>
             <div>New Password</div>
             <Input.Password
               iconRender={visible =>
@@ -78,6 +100,13 @@ function Content({ name, email, id, budget, updateBudgetToRedux }: ContenProps) 
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
             ></Input.Password>
+          </div> */}
+          <div>
+            <div>Set reminder for my budget:</div>
+            <Progress
+              threshold={currThreshold}
+              changeThreshold={setCurrThrehold}
+            ></Progress>
           </div>
           <Button type="primary" onClick={handleConfirmBtnClick}>
             Confirm
@@ -94,6 +123,7 @@ const mapState = (state: RootState) => {
     email: state.HomeReducer.email,
     id: state.HomeReducer.uid,
     budget: state.AccountReducer.budget,
+    threshold: state.AccountReducer.threshold,
   };
 };
 
@@ -103,6 +133,13 @@ const mapDispatch = (dispatch: Dispatch) => {
       const action: UpdateBudget = {
         type: UPDATE_BUDGET,
         budget,
+      };
+      dispatch(action);
+    },
+    updateThresholdToRedux(threshold: number): void {
+      const action: UpdateBudgetThreshold = {
+        type: UPDATE_BUDGET_THRESHOLD,
+        threshold,
       };
       dispatch(action);
     },

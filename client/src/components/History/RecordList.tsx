@@ -61,6 +61,13 @@ function RecordList({
 }: List) {
   const [data, setData] = useState<Record[]>([]);
 
+  const getSortData = (records: Record[]): Record[] => {
+    const sortedData = records.sort((a, b) => {
+      return a.recordDate < b.recordDate ? 1 : -1;
+    });
+    return sortedData;
+  };
+
   const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];
     if (!enabled) {
@@ -81,21 +88,22 @@ function RecordList({
         modifiedRecord = records.filter(record => record.category === category);
       }
     }
+
     // caution: update state only at the top level
-    setData(modifiedRecord);
+    setData(getSortData(modifiedRecord));
   };
 
   useEffect(() => {
     generateRecords();
   }, [enabled, month, category, records]);
 
-  const updateAllRecordsToRedux = async () => {
+  const updateAllRecordsToRedux = async (): Promise<void> => {
     const response = await axios.get(`/api/getRecords/${user}`);
     const records: Record[] = response.data;
     updateRecordsToRedux(records);
   };
 
-  const handleDelBtnClick = async (recordID: string) => {
+  const handleDelBtnClick = async (recordID: string): Promise<void> => {
     const request = { data: { recordID } };
     const response = await axios.delete("/api/deleteRecord", request);
     if (response.data.succ) {
@@ -107,7 +115,7 @@ function RecordList({
   };
 
   // 如果item未被选中，点击修改会选中该item并把item信息更新到redux
-  const handleEditBtnClick = (record: Record) => {
+  const handleEditBtnClick = (record: Record): void => {
     if (recordID !== record._id) {
       updateRecordIDToRedux(record._id);
       updateTitleToRedux(record.title);
@@ -119,7 +127,7 @@ function RecordList({
     }
   };
 
-  const handleConfirmEditBtnClick = async () => {
+  const handleConfirmEditBtnClick = async (): Promise<void> => {
     if (recordDate === "") {
       message.warn("Please select a record date");
       return;

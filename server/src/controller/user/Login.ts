@@ -25,6 +25,7 @@ const checkLogin = async (request: Request, response: Response) => {
       uid: user._id,
       name: user.name,
       budget: user.budget,
+      threshold: user.threshold,
     });
   }
 };

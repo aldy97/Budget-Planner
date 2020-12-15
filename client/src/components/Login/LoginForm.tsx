@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { UPDATE_BUDGET, UpdateBudget } from "../../actions/AccountAction";
+import {
+  UPDATE_BUDGET,
+  UpdateBudget,
+  UPDATE_BUDGET_THRESHOLD,
+  UpdateBudgetThreshold,
+} from "../../actions/AccountAction";
 import {
   UPDATE_USER_EMAIL,
   UpdateEmail,
@@ -26,6 +31,7 @@ interface LoginFormProps {
   updateUserID?: any;
   updateName?: any;
   updateBudget: (budget: number) => void;
+  updateThreshold: (threshold: number) => void;
 }
 
 function LoginForm({
@@ -33,6 +39,7 @@ function LoginForm({
   updateUserID,
   updateName,
   updateBudget,
+  updateThreshold,
 }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +51,7 @@ function LoginForm({
     const response = await axios.post("/api/login", request);
     const isLogin = response.data.login;
     const messageText = response.data.message;
+    console.log(response.data);
     if (isLogin) {
       message.success("Login Success!");
       updateEmail(email);
@@ -51,6 +59,7 @@ function LoginForm({
       updateName(response.data.name);
       setIsLogin(true);
       updateBudget(response.data.budget);
+      updateThreshold(response.data.threshold);
     } else {
       message.error(messageText);
     }
@@ -114,6 +123,13 @@ const mapDispatch = (dispatch: Dispatch) => {
       const action: UpdateBudget = {
         type: UPDATE_BUDGET,
         budget,
+      };
+      dispatch(action);
+    },
+    updateThreshold(threshold: number) {
+      const action: UpdateBudgetThreshold = {
+        type: UPDATE_BUDGET_THRESHOLD,
+        threshold,
       };
       dispatch(action);
     },

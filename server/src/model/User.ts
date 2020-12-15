@@ -13,6 +13,7 @@ export interface IUser {
   createdOn?: Date;
   updatedOn?: Date;
   budget?: number;
+  threshold?: number;
 }
 
 export type UserDocument = mongoose.Document & IUser;
@@ -34,6 +35,7 @@ const userSchema = new instance.Schema({
   createdOn: { type: Date, default: Date.now },
   updatedOn: { type: Date, default: Date.now },
   budget: { type: Number, default: 0 },
+  threshold: { type: Number, default: 0 },
 });
 
 export const User = instance.model<UserDocument>('User', userSchema);
