@@ -12,9 +12,10 @@ interface SelectProps {
 }
 
 function IncomeSelector({ updateCategoryToRedux }: SelectProps) {
-  const handleCategoryChange = (value: any) => {
+  const handleCategoryChange = (value: any): void => {
     updateCategoryToRedux(value);
   };
+
   return (
     <Select
       placeholder="Categories"

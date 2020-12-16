@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 interface TypeInputProps {
-  updateRecordType?: any;
+  updateRecordType: (type: string) => void;
 }
 
 function TypeInput({ updateRecordType }: TypeInputProps) {

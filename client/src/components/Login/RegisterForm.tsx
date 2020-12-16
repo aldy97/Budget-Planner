@@ -20,7 +20,11 @@ interface RegisterFormProps {
   updateName: (name: string) => void;
 }
 
-function RegisterFrom({ updateEmail, updateName, updateUserID }: RegisterFormProps) {
+function RegisterFrom({
+  updateEmail,
+  updateName,
+  updateUserID,
+}: RegisterFormProps): JSX.Element {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const [email, setEmail] = useState("");

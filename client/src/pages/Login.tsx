@@ -13,7 +13,7 @@ const StyledDesc = styled.div`
   color: #8c8c8c;
 `;
 
-function Login() {
+function Login(): JSX.Element {
   const [isAtLogin, setIsAtLogin] = useState<boolean>(true);
 
   const toogle = () => {

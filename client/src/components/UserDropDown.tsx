@@ -6,7 +6,7 @@ interface DropDown {
   name: string;
 }
 
-function UserDropDown({ name }: DropDown) {
+function UserDropDown({ name }: DropDown): JSX.Element {
   const handleLogOutBtnClcik = () => {
     window.location.href = "/";
   };
