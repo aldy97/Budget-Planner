@@ -11,7 +11,6 @@ import {
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Progress from "./Progress";
 
 interface ContenProps {
@@ -34,11 +33,11 @@ function Content({
   updateThresholdToRedux,
 }: ContenProps) {
   const { Content } = Layout;
-  const [currBudget, setCurrBudget] = useState(budget as number);
-  const [currThreshold, setCurrThrehold] = useState(threshold);
+  const [currBudget, setCurrBudget] = useState<number>(budget);
+  const [currThreshold, setCurrThrehold] = useState<number>(threshold);
 
-  const handleBudgetChange = (e: any) => {
-    setCurrBudget(e.target.value);
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrBudget(parseInt(e.target.value));
   };
 
   const handleConfirmBtnClick = async () => {
@@ -51,7 +50,6 @@ function Content({
       updatedFields: { budget: currBudget, threshold: currThreshold },
     };
     const response = await axios.put("/api/updateUserInfo", request);
-    console.log(response.data);
     if (response.data.status) {
       message.success(response.data.message);
       updateBudgetToRedux(response.data.updatedUserInfo.budget as number);

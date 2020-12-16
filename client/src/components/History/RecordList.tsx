@@ -34,7 +34,7 @@ interface List {
   updateDescToRedux: (desc: string) => void;
   updateAmountToRedux: (amount: number) => void;
   updateDateToRedux: (date: string) => void;
-  user: any;
+  user: string;
   recordTitle: string;
   amount: number;
   recordDate: string;

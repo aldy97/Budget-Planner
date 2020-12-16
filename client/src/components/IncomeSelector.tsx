@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 const { Option } = Select;
 
 interface SelectProps {
-  updateCategoryToRedux?: any;
+  updateCategoryToRedux: (cat: string) => void;
 }
 
 function IncomeSelector({ updateCategoryToRedux }: SelectProps) {

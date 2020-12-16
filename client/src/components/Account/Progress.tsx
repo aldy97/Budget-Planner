@@ -7,11 +7,11 @@ interface ProgressBarProps {
   changeThreshold: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function ProgressBar({ threshold, changeThreshold }: ProgressBarProps) {
-  const handlePlusBtnClick = () => {
+function ProgressBar({ threshold, changeThreshold }: ProgressBarProps): JSX.Element {
+  const handlePlusBtnClick = (): void => {
     changeThreshold(threshold + 10 > 100 ? 100 : threshold + 10);
   };
-  const handleMinusBtnClick = () => {
+  const handleMinusBtnClick = (): void => {
     changeThreshold(threshold - 10 < 0 ? 0 : threshold - 10);
   };
   return (

@@ -27,9 +27,9 @@ export const StyledForm = styled(Form)`
 `;
 
 interface LoginFormProps {
-  updateEmail?: any;
-  updateUserID?: any;
-  updateName?: any;
+  updateEmail: (email: string) => void;
+  updateUserID: (id: string) => void;
+  updateName: (name: string) => void;
   updateBudget: (budget: number) => void;
   updateThreshold: (threshold: number) => void;
 }
@@ -51,7 +51,6 @@ function LoginForm({
     const response = await axios.post("/api/login", request);
     const isLogin = response.data.login;
     const messageText = response.data.message;
-    console.log(response.data);
     if (isLogin) {
       message.success("Login Success!");
       updateEmail(email);
@@ -65,11 +64,11 @@ function LoginForm({
     }
   };
 
-  const handleEmailChange = (e: any) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e: any) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
