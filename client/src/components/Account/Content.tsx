@@ -36,7 +36,7 @@ function Content({
   const [currBudget, setCurrBudget] = useState<number>(budget);
   const [currThreshold, setCurrThrehold] = useState<number>(threshold);
 
-  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBudgetChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrBudget(parseInt(e.target.value));
   };
 
@@ -68,7 +68,7 @@ function Content({
         <Space direction="vertical" size="large">
           <div>
             <div>Name:</div>
-            <Input defaultValue={name}></Input>
+            <Input defaultValue={name} disabled></Input>
           </div>
           <div>
             <div>Email:</div>
