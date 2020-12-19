@@ -63,14 +63,17 @@ function RecordList({
 
   const getSortData = (records: Record[]): Record[] => {
     const sortedData = records.sort((a, b) => {
-      return a.recordDate < b.recordDate ? 1 : -1;
+      if (a.recordDate < b.recordDate) {
+        return 1;
+      }
+      return a.amount >= b.amount ? 1 : -1;
     });
     return sortedData;
   };
 
   const generateRecords = (): void => {
     let modifiedRecord: Record[] = [];
-    if (!enabled) {
+    if (!enabled || (month === "" && category === "")) {
       modifiedRecord = records;
     } else {
       if (month && category && month !== "" && category !== "") {

@@ -9,7 +9,7 @@ const checkRegister = async (request: Request, response: Response) => {
   const confirmPassword: string = request.body.confirmPassword;
 
   if (!email) {
-    response.send(MESSAGES.EMPTY_EMAIL);
+    response.send({ message: MESSAGES.EMPTY_EMAIL });
     throw new ServerError({
       message: MESSAGES.EMPTY_EMAIL,
       statusCode: 400,
@@ -17,7 +17,7 @@ const checkRegister = async (request: Request, response: Response) => {
   }
 
   if (!validator.isEmail(email)) {
-    response.send(MESSAGES.INVALID_EMAIL);
+    response.send({ message: MESSAGES.INVALID_EMAIL });
     throw new ServerError({
       message: MESSAGES.INVALID_EMAIL,
       statusCode: 400,
@@ -25,12 +25,12 @@ const checkRegister = async (request: Request, response: Response) => {
   }
 
   if (!name) {
-    response.send(MESSAGES.EMPTY_NAME);
+    response.send({ message: MESSAGES.EMPTY_NAME });
     throw new ServerError({ message: MESSAGES.EMPTY_NAME, statusCode: 400 });
   }
 
   if (!password) {
-    response.send(MESSAGES.EMPTY_PASSWORD);
+    response.send({ message: MESSAGES.EMPTY_PASSWORD });
     throw new ServerError({
       message: MESSAGES.EMPTY_PASSWORD,
       statusCode: 400,
@@ -38,7 +38,7 @@ const checkRegister = async (request: Request, response: Response) => {
   }
 
   if (password.length < 7) {
-    response.send(MESSAGES.PASSWORD_TOO_SHORT);
+    response.send({ message: MESSAGES.PASSWORD_TOO_SHORT });
     throw new ServerError({
       message: MESSAGES.PASSWORD_TOO_SHORT,
       statusCode: 400,
@@ -46,7 +46,7 @@ const checkRegister = async (request: Request, response: Response) => {
   }
 
   if (!confirmPassword) {
-    response.send(MESSAGES.CONFIRM_PASSWORD_EMPTY);
+    response.send({ message: MESSAGES.CONFIRM_PASSWORD_EMPTY });
     throw new ServerError({
       message: MESSAGES.CONFIRM_PASSWORD_EMPTY,
       statusCode: 400,
@@ -54,7 +54,7 @@ const checkRegister = async (request: Request, response: Response) => {
   }
 
   if (password !== confirmPassword) {
-    response.send(MESSAGES.PASSWORDS_DO_NOT_MATCH);
+    response.send({ message: MESSAGES.PASSWORDS_DO_NOT_MATCH });
     throw new ServerError({
       message: MESSAGES.PASSWORDS_DO_NOT_MATCH,
       statusCode: 400,
