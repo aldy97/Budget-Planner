@@ -41,6 +41,13 @@ interface List {
   description: string;
 }
 
+interface UpdateRequest {
+  _id: string;
+  updatedFields: {
+    [key: string]: string | number;
+  };
+}
+
 function RecordList({
   records,
   recordID,
@@ -141,7 +148,7 @@ function RecordList({
     }
     const edittedTitle = recordTitle === "" ? "No title" : recordTitle;
     const edittedDesc = description === "" ? "No description" : description;
-    const request = {
+    const request: UpdateRequest = {
       _id: recordID,
       updatedFields: {
         title: edittedTitle,

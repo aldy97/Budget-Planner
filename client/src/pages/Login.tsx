@@ -27,9 +27,7 @@ function Login(): JSX.Element {
   return (
     <>
       <Logo size="large" showWords></Logo>
-      <StyledDesc>
-        An web app that helps you improve your financial status
-      </StyledDesc>
+      <StyledDesc>A web app that helps you improve your financial status</StyledDesc>
       <LoginRegToggler atLogin={isAtLogin} toogle={toogle}></LoginRegToggler>
       {isAtLogin && <LoginForm></LoginForm>}
       {!isAtLogin && <RegisterFrom></RegisterFrom>}
