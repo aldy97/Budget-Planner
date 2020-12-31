@@ -25,7 +25,7 @@ function UserDropDown({ name }: DropDown): JSX.Element {
     <Dropdown overlay={menu} placement="bottomCenter">
       <Button>
         <UserOutlined></UserOutlined>
-        {name}
+        <span data-test="name">{name}</span>
       </Button>
     </Dropdown>
   );

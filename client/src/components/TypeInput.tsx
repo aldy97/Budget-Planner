@@ -25,10 +25,10 @@ function TypeInput({ updateRecordType }: TypeInputProps) {
 
   return (
     <>
-      <Checkbox onChange={onChange} checked={isExpense}>
+      <Checkbox onChange={onChange} checked={isExpense} data-test="expense">
         Expense
       </Checkbox>
-      <Checkbox onChange={onChange} checked={!isExpense}>
+      <Checkbox onChange={onChange} checked={!isExpense} data-test="income">
         Income
       </Checkbox>
     </>

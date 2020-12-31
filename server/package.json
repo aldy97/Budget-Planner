@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -L --exec ts-node src/index.ts",
     "lint": "eslint . --ext .tsx,.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "react-scripts test --watchAll=true"
   },
   "keywords": [],
   "author": "",
