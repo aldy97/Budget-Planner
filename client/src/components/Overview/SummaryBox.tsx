@@ -23,8 +23,10 @@ interface Box {
 function SummaryBox({ type, amount }: Box): JSX.Element {
   return (
     <StyledBox type={type}>
-      <div>{type === "expense" ? "Monthly Expense" : "Monthly Income"}:</div>
-      <div>${amount}</div>
+      <div data-test="type">
+        {type === "expense" ? "Monthly Expense" : "Monthly Income"}:
+      </div>
+      <div data-test="amount">${amount}</div>
     </StyledBox>
   );
 }
