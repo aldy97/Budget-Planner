@@ -4,6 +4,7 @@ import TypeInput from "../../components/TypeInput";
 import { findTestWrapper } from "../../utils/findTestWrapper";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
+import { UPDATE_RECORD_TYPE, UpdateType } from "../../actions/ModalAction";
 
 const mockStore = configureStore([]);
 
@@ -15,9 +16,7 @@ describe("TypeInput", () => {
   let incomeBox;
 
   beforeEach(() => {
-    store = mockStore({
-      myState: "sample text",
-    });
+    store = mockStore();
 
     store.dispatch = jest.fn();
 
@@ -49,5 +48,14 @@ describe("TypeInput", () => {
   it("disptach action to the reducer after being clicked", () => {
     expenseBox.at(0).simulate("click");
     expect(store.dispatch).toBeCalledTimes(1);
+  });
+
+  it("can disptach action to the store", () => {
+    const action: UpdateType = {
+      type: UPDATE_RECORD_TYPE,
+      recordType: "expense",
+    };
+    store.dispatch(action);
+    expect(store.getActions()).toMatchSnapshot();
   });
 });
