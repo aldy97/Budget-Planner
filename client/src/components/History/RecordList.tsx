@@ -208,7 +208,7 @@ function RecordList({
               </Popconfirm>,
             ]}
           >
-            <ListItemMeta item={item}></ListItemMeta>
+            <ListItemMeta item={item} data-test="list-item"></ListItemMeta>
           </List.Item>
         )}
       />

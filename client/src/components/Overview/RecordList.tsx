@@ -10,30 +10,21 @@ interface ListProps {
   maxLength: number;
 }
 
-function RecordList({ type, records, maxLength }: ListProps) {
+function RecordList({ type, records, maxLength }: ListProps): JSX.Element {
   const currMonth = moment().month() + 1;
   const currYear = moment().year();
 
-  const getRecordMonth = (date: string): number => {
-    return parseInt(date.split("-")[1]);
-  };
-
-  const getRecordYear = (date: string): number => {
-    return parseInt(date.split("-")[0]);
+  const matchYearAndMonth = (date: string): boolean => {
+    const [year, month] = date.split("-");
+    return parseInt(year) === currYear && parseInt(month) === currMonth;
   };
 
   // 根据记录类型，展示当年当月指定数量的记录
   const data = records
-    ? records
-        .filter(record => record.type === type)
-        .filter(
-          record =>
-            getRecordMonth(record.createdOn) === currMonth &&
-            getRecordYear(record.createdOn) === currYear
-        )
-        .reverse()
-        .slice(0, maxLength)
-    : [];
+    .filter(record => record.type === type)
+    .filter(record => matchYearAndMonth(record.recordDate))
+    .reverse()
+    .slice(0, maxLength);
 
   return (
     <>

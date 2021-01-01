@@ -2,7 +2,6 @@ import React from "react";
 import { mount } from "enzyme";
 import { Record } from "../../components/Overview/Content";
 import RecordList from "../../components/Overview/RecordList";
-import { findTestWrapper } from "../../utils/findTestWrapper";
 
 const mockRecords: Record[] = [
   {
@@ -69,7 +68,7 @@ const mockRecords: Record[] = [
     type: "expense",
     category: "Meals",
     amount: 20,
-    recordDate: "2021-01-01",
+    recordDate: "2019-01-01",
   },
   {
     title: "test7",
@@ -80,7 +79,7 @@ const mockRecords: Record[] = [
     type: "income",
     category: "investment",
     amount: 20,
-    recordDate: "2021-01-01",
+    recordDate: "2019-01-01",
   },
 ];
 
