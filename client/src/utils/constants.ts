@@ -34,6 +34,7 @@ export const ExpenseCategories = [
   "Maintainance",
   "Donation",
 ];
+
 export const IncomeCategories = [
   "Salary",
   "Part-time",

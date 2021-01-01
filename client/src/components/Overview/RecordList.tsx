@@ -3,29 +3,36 @@ import Tag from "./CategoryTag";
 import { Record } from "./Content";
 import { List } from "antd";
 import moment from "moment";
-import { connect } from "react-redux";
-import { RootState } from "../../reducers/index";
 
 interface ListProps {
   type: "expense" | "income";
-  records?: Record[];
-  maxLength?: number;
+  records: Record[];
+  maxLength: number;
 }
 
 function RecordList({ type, records, maxLength }: ListProps) {
   const currMonth = moment().month() + 1;
+  const currYear = moment().year();
 
   const getRecordMonth = (date: string): number => {
     return parseInt(date.split("-")[1]);
   };
 
-  // 根据记录类型，展示当月指定数量的记录
+  const getRecordYear = (date: string): number => {
+    return parseInt(date.split("-")[0]);
+  };
+
+  // 根据记录类型，展示当年当月指定数量的记录
   const data = records
     ? records
         .filter(record => record.type === type)
-        .filter(record => getRecordMonth(record.createdOn) === currMonth)
+        .filter(
+          record =>
+            getRecordMonth(record.createdOn) === currMonth &&
+            getRecordYear(record.createdOn) === currYear
+        )
         .reverse()
-        .slice(0, maxLength ? maxLength : undefined)
+        .slice(0, maxLength)
     : [];
 
   return (
@@ -35,7 +42,7 @@ function RecordList({ type, records, maxLength }: ListProps) {
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
-          <List.Item>
+          <List.Item data-test="list-item">
             <List.Item.Meta
               title={item.title}
               description={
@@ -53,10 +60,4 @@ function RecordList({ type, records, maxLength }: ListProps) {
   );
 }
 
-const mapState = (state: RootState) => {
-  return {
-    records: state.HomeReducer.records,
-  };
-};
-
-export default connect(mapState, null)(RecordList);
+export default RecordList;
