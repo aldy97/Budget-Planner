@@ -43,8 +43,11 @@ describe("Amount Input", () => {
 
   it("dispatches when amount value changes", () => {
     const input = wrapper.find("input");
+    expect(store.dispatch).toHaveBeenCalledTimes(0);
     input.simulate("change", { value: 200 });
     expect(store.dispatch).toHaveBeenCalledTimes(1);
+    input.simulate("change", { value: 201 });
+    expect(store.dispatch).toHaveBeenCalledTimes(2);
   });
 
   it("can dispatch action to the reducer", () => {

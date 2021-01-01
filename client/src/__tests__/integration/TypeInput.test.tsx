@@ -16,7 +16,7 @@ describe("TypeInput", () => {
   let incomeBox;
 
   beforeEach(() => {
-    store = mockStore();
+    store = mockStore({ ModalReducer: { recordType: "expense" } });
 
     store.dispatch = jest.fn();
 
@@ -45,9 +45,16 @@ describe("TypeInput", () => {
     expect(incomeBox.at(0).prop("checked")).toBeTruthy;
   });
 
-  it("disptach action to the reducer after being clicked", () => {
-    expenseBox.at(0).simulate("click");
+  it("disptach action to the reducer after checkbox being clicked", () => {
+    const checkboxs = wrapper.find("input");
+    expect(checkboxs.length).toBe(2);
+    expect(store.dispatch).toBeCalledTimes(0);
+    const expense = checkboxs.at(0);
+    const income = checkboxs.at(1);
+    expense.simulate("change", { checked: false });
     expect(store.dispatch).toBeCalledTimes(1);
+    income.simulate("change", { checked: false });
+    expect(store.dispatch).toBeCalledTimes(2);
   });
 
   it("can disptach action to the store", () => {
