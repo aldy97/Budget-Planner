@@ -68,7 +68,7 @@ function Content({
         <Space direction="vertical" size="large">
           <div>
             <div>Name:</div>
-            <Input defaultValue={name} disabled></Input>
+            <Input defaultValue={name} disabled data-test="name"></Input>
           </div>
           <div>
             <div>Email:</div>

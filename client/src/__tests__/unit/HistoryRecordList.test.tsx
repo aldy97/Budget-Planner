@@ -99,14 +99,6 @@ describe("RecordList in History", () => {
     description: "",
   };
 
-  beforeEach(() => {
-    document = {
-      ...document,
-      addEventListener: () => {},
-      removeEventListener: () => {},
-    };
-  });
-
   it("renders without crshing", () => {
     const store = mockStore({
       HomeReducer: { records: mockRecords },
