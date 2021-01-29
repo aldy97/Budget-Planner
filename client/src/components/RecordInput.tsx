@@ -12,13 +12,10 @@ import { Dispatch } from "redux";
 const { TextArea } = Input;
 
 interface RecordInputProps {
-  updateDescToRedux?: any;
+  updateDescToRedux: (desc: string) => void;
 }
 
 function RecordInput({ updateDescToRedux }: RecordInputProps) {
-  const handleOnChange = (e: any) => {
-    updateDescToRedux(e.target.value);
-  };
   return (
     <Space size="middle" direction="vertical">
       <TitleInput></TitleInput>
@@ -30,7 +27,9 @@ function RecordInput({ updateDescToRedux }: RecordInputProps) {
         size="middle"
         placeholder="Description (optional)"
         showCount
-        onChange={handleOnChange}
+        onChange={e => {
+          updateDescToRedux(e.target.value);
+        }}
         maxLength={50}
       />
     </Space>

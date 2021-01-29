@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { MESSAGES } from '../../util/constants';
 import { User, UserDocument } from '../../model/User';
+import moment from 'moment';
 
-const updateUserInfo = async (req: Request, res: Response): Promise<void> => {
+export default async (req: Request, res: Response): Promise<void> => {
   const { _id, updatedFields } = req.body;
   if (!_id) {
-    res.send({ status: false, message: MESSAGES.UNEXPECTED_ERROR });
+    res.status(400).send({ message: MESSAGES.USER_ID_NOT_PROVIDED });
     return;
   }
 
@@ -13,31 +14,27 @@ const updateUserInfo = async (req: Request, res: Response): Promise<void> => {
   try {
     userExist = await User.exists({ _id });
   } catch (e) {
-    res.send({ status: false, message: MESSAGES.UNEXPECTED_ERROR });
+    res.status(404).send({ message: MESSAGES.USER_NOT_EXIST });
   }
 
   if (!userExist) {
-    res.send({ status: false, message: MESSAGES.USER_ID_NOT_FOUND });
+    res.status(404).send({ message: MESSAGES.USER_NOT_EXIST });
     return;
   }
 
   try {
-    const updatedUserInfo: UserDocument = await User.findOneAndUpdate(
+    const updatedUser: UserDocument = await User.findOneAndUpdate(
       { _id },
-      updatedFields,
+      { ...updatedFields, updatedOn: moment().format('LLL') },
       {
         new: true,
         runValidators: true,
       }
     );
-    res.send({
-      status: true,
-      updatedUserInfo,
-      message: MESSAGES.UPDATE_USERINFO_SUCC,
+    res.status(200).send({
+      user: updatedUser,
     });
   } catch (e) {
-    res.send({ status: false, message: MESSAGES.UNEXPECTED_ERROR });
+    res.status(500).send({ message: MESSAGES.UNEXPECTED_ERROR });
   }
 };
-
-export default updateUserInfo;

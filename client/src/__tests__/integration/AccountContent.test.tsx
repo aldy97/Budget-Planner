@@ -63,7 +63,7 @@ describe("Account Content", () => {
     expect(confirm.find("span").text()).toEqual("Confirm");
   });
 
-  it("threshold value should change after minus is clickde", () => {
+  it("threshold value should be decremented by 10 after minus is clickde", () => {
     const buttons = wrapper.find("button");
     const minus = buttons.at(0);
     minus.simulate("click");
@@ -71,7 +71,7 @@ describe("Account Content", () => {
     expect(threshold.prop("title")).toEqual("20%");
   });
 
-  it("threshold value should change after minus is clickde", () => {
+  it("threshold value should be incremented by 10 after minus is clickde", () => {
     const buttons = wrapper.find("button");
     const plus = buttons.at(1);
     plus.simulate("click");
