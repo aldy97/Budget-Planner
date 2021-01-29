@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import { UPDATE_USER_INFO, UpdateUserInfo } from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { User } from "../../reducers/HomeReducer";
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -13,9 +14,11 @@ export const StyledForm = styled(Form)`
   margin-right: auto;
 `;
 
-interface LoginFormProps {}
+interface LoginFormProps {
+  updateUserInfo?: (user: User) => void;
+}
 
-function LoginForm({}: LoginFormProps) {
+function LoginForm({ updateUserInfo }: LoginFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,10 +27,13 @@ function LoginForm({}: LoginFormProps) {
   const handleLoginBtnClick = async () => {
     const request = { email, password };
     const response = await axios.post("/api/login", request);
-    const isLogin = response.data.login;
+    console.log(response);
     const messageText = response.data.message;
-    if (isLogin) {
+    if (response.status === 201) {
+      const user: User = response.data.user;
       message.success("Login Success!");
+      updateUserInfo ? updateUserInfo(user) : null;
+      setIsLogin(true);
     } else {
       message.error(messageText);
     }
@@ -74,7 +80,15 @@ function LoginForm({}: LoginFormProps) {
 }
 
 const mapDispatch = (dispatch: Dispatch) => {
-  return {};
+  return {
+    updateUserInfo(user: User) {
+      const action: UpdateUserInfo = {
+        type: UPDATE_USER_INFO,
+        user,
+      };
+      dispatch(action);
+    },
+  };
 };
 
 export default connect(null, mapDispatch)(LoginForm);

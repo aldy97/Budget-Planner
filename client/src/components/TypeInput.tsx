@@ -1,27 +1,19 @@
 import React, { useState } from "react";
 import { Checkbox } from "antd";
-import { UPDATE_RECORD_TYPE, UpdateType } from "../actions/ModalAction";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 
 interface TypeInputProps {
-  updateRecordType: (type: string) => void;
+  setType: React.Dispatch<React.SetStateAction<string>>;
 }
-
-function TypeInput({ updateRecordType }: TypeInputProps) {
+function TypeInput({ setType }: TypeInputProps) {
   const [isExpense, setIsExpense] = useState(true);
-
-  // useEffect(() => {
-  //   updateRecordType(isExpense ? "expense" : "income");
-  // }, [isExpense]);
 
   const onChange = () => {
     if (isExpense) {
       setIsExpense(false);
-      updateRecordType("income");
+      setType("income");
     } else {
       setIsExpense(true);
-      updateRecordType("expense");
+      setType("expense");
     }
   };
 
@@ -37,16 +29,4 @@ function TypeInput({ updateRecordType }: TypeInputProps) {
   );
 }
 
-const mapDispatch = (dispatch: Dispatch) => {
-  return {
-    updateRecordType(recordType: string) {
-      const action: UpdateType = {
-        type: UPDATE_RECORD_TYPE,
-        recordType,
-      };
-      dispatch(action);
-    },
-  };
-};
-
-export default connect(null, mapDispatch)(TypeInput);
+export default TypeInput;

@@ -22,5 +22,5 @@ export default async (req: Request, res: Response) => {
   }
 
   const foundUser = await User.findOne({ _id: user }).populate('records');
-  res.status(200).send({ offers: foundUser.records });
+  res.status(200).send({ records: foundUser.records });
 };

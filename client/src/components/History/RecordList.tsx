@@ -5,7 +5,6 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
 import axios from "axios";
 import { List, message, Popconfirm, Button } from "antd";
-import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
 import {
   UPDATE_RECORD_ID,
   UpdateRecordID,
@@ -218,7 +217,7 @@ function RecordList({
 
 const mapState = (state: RootState) => {
   return {
-    user: state.HomeReducer.uid,
+    user: state.HomeReducer.user,
     records: state.HomeReducer.records,
     enabled: state.FilterReducer.enabled,
     month: state.FilterReducer.month,
@@ -233,13 +232,6 @@ const mapState = (state: RootState) => {
 
 const mapDispatch = (dispatch: Dispatch) => {
   return {
-    updateRecordsToRedux(records: Record[]): void {
-      const action: UpdateRecords = {
-        type: UPDATE_RECORDS,
-        records,
-      };
-      dispatch(action);
-    },
     updateRecordIDToRedux(recordID: string): void {
       const action: UpdateRecordID = {
         type: UPDATE_RECORD_ID,
@@ -278,4 +270,4 @@ const mapDispatch = (dispatch: Dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(RecordList);
+export default RecordList;

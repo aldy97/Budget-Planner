@@ -21,7 +21,7 @@ function Content(): JSX.Element {
         <div style={{ textAlign: "center" }}>
           <Filter></Filter>
         </div>
-        <RecordList></RecordList>
+        {/* <RecordList></RecordList> */}
       </div>
     </Content>
   );
