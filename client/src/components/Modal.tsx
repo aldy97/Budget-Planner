@@ -134,6 +134,8 @@ function AddRecordModal({
             onChange={e => {
               setAmount(e.target.value);
             }}
+            prefix="$"
+            suffix="CAD"
             type="number"
           ></Input>
         </div>

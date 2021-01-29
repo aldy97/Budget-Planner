@@ -22,15 +22,15 @@ const StyledHint = styled.div`
 `;
 
 export interface Record {
+  _id: string;
   amount: number;
   description: string;
   title: string;
   type: string;
   category: string;
+  recordDate: string;
   createdOn: string;
   updatedOn: string;
-  _id: string;
-  recordDate: string;
 }
 
 interface ContentProps {
