@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Record } from "../components/Overview/Content";
 import ExpenseSelector from "./ExpenseSelector";
 import IncomeSelector from "./IncomeSelector";
-import { message, Modal, Input, Space, DatePicker, Checkbox } from "antd";
+import {
+  message,
+  Modal,
+  Input,
+  Space,
+  DatePicker,
+  Checkbox,
+  notification,
+  Button,
+} from "antd";
+import { NotificationOutlined } from "@ant-design/icons";
 import { User } from "../reducers/HomeReducer";
+import { useHistory } from "react-router-dom";
 import moment, { Moment } from "moment";
 import axios from "axios";
 import { URL } from "../utils/constants";
@@ -16,34 +27,78 @@ interface ModalProps {
   visible: boolean;
   setVisible: any;
   user?: User;
+  records: Record[];
   updateRecordsToRedux?: (records: Record[]) => void;
 }
+
+const BASE_URL = process.env.NODE_ENV === "production" ? URL.production : URL.dev;
 
 function AddRecordModal({
   visible,
   setVisible,
   user,
+  records,
   updateRecordsToRedux,
 }: ModalProps) {
   const currUser = user as User;
   const { TextArea } = Input;
 
   const [title, setTitle] = useState("");
-  const [recordDate, setRecordDate] = useState(moment().format("LLL"));
+  const [recordDate, setRecordDate] = useState("");
   const [type, setType] = useState<"expense" | "income">("expense");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
 
+  const history = useHistory();
+
   const getRecords = async (): Promise<void> => {
-    const response = await axios.get(`/api/getRecords/${currUser._id}`);
+    const response = await axios.get(`${BASE_URL}/api/getRecords/${currUser._id}`);
     const records: Record[] = response.data.records;
     updateRecordsToRedux ? updateRecordsToRedux(records) : null;
   };
 
+  // determines whether shows nitification after a new record is stored
+  const showNotification = (records: Record[]): void => {
+    const expense: number = records
+      .filter(
+        record =>
+          record.type === "expense" && moment().isSame(record.recordDate, "month")
+      )
+      .map(record => record.amount)
+      .reduce((acc, curr) => acc + curr, 0);
+    const cutLine = (currUser.budget * currUser.threshold) / 100;
+
+    if (currUser.threshold && currUser.budget && expense >= cutLine) {
+      const percentage = (expense * 100) / currUser.budget;
+      const key = "notify user";
+      const btn = (
+        <Button type="primary" size="small" onClick={() => notification.close(key)}>
+          Confirm
+        </Button>
+      );
+      notification.open({
+        message: <strong>Budget threshold notification</strong>,
+        description: `You have spent ${percentage.toFixed(
+          2
+        )}% of your monthly budget: $${currUser.budget}`,
+        icon: <NotificationOutlined style={{ color: "#108ee9" }} />,
+        btn,
+        key,
+      });
+    }
+  };
+
+  // adding `,[]` makes sure that it only excute getRecords once when it is mounted
   useEffect(() => {
     getRecords();
-  });
+  }, []);
+
+  useEffect(() => {
+    if (!currUser._id) {
+      history.push("/");
+    }
+  }, []);
 
   const onOk = async (): Promise<void> => {
     if (!category) {
@@ -52,7 +107,17 @@ function AddRecordModal({
     }
 
     if (!recordDate) {
-      message.error("Record date is not selected");
+      message.error("Record date is not determined");
+      return;
+    }
+
+    if (moment(recordDate).isAfter(moment())) {
+      message.error("The date can not be future date");
+      return;
+    }
+
+    if (!amount) {
+      message.error("Amount must be provided");
       return;
     }
 
@@ -71,11 +136,15 @@ function AddRecordModal({
       description: description || "No description",
     };
 
-    const response = await axios.post(`${URL}/api/createRecord`, request);
-    console.log(response);
+    const response = await axios.post(`${BASE_URL}/api/createRecord`, request);
     setVisible(false);
     if (response.status === 201) {
-      message.success(response.data.message);
+      const records: Record[] = response.data.records;
+      message.success("Record is added successfully");
+      if (updateRecordsToRedux) {
+        updateRecordsToRedux(records);
+      }
+      type === "expense" ? showNotification(records) : null;
     } else {
       message.error(response.data.message);
     }
@@ -164,6 +233,7 @@ function AddRecordModal({
 const mapState = (state: RootState) => {
   return {
     user: state.HomeReducer.user,
+    records: state.HomeReducer.records,
   };
 };
 

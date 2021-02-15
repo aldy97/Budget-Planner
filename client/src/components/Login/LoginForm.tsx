@@ -7,6 +7,9 @@ import { UPDATE_USER_INFO, UpdateUserInfo } from "../../actions/HomeAction";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { User } from "../../reducers/HomeReducer";
+import { URL } from "../../utils/constants";
+
+const BASE_URL = process.env.NODE_ENV === "production" ? URL.production : URL.dev;
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -24,18 +27,27 @@ function LoginForm({ updateUserInfo }: LoginFormProps) {
 
   const [isLogin, setIsLogin] = useState(false);
 
-  const handleLoginBtnClick = async () => {
+  const handleLoginBtnClick = async (): Promise<void> => {
+    if (!email) {
+      message.info("Email is empty");
+      return;
+    }
+    if (!password) {
+      message.info("Password is empty");
+      return;
+    }
+
     const request = { email, password };
-    const response = await axios.post("/api/login", request);
-    console.log(response);
-    const messageText = response.data.message;
-    if (response.status === 201) {
-      const user: User = response.data.user;
-      message.success("Login Success!");
-      updateUserInfo ? updateUserInfo(user) : null;
-      setIsLogin(true);
-    } else {
-      message.error(messageText);
+    try {
+      const response = await axios.post(`${BASE_URL}/api/login`, request);
+      if (response.status === 201) {
+        const user: User = response.data.user;
+        message.success("Login Success!");
+        updateUserInfo ? updateUserInfo(user) : null;
+        setIsLogin(true);
+      }
+    } catch (err) {
+      message.error("Login failed");
     }
   };
 

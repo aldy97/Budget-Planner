@@ -4,13 +4,17 @@ import ListItemMeta from "./ListItemMeta";
 import { COLORS } from "../../utils/constants";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Record } from "../Overview/Content";
-import axios from "axios";
 import { List, message, Popconfirm, Button } from "antd";
 import { connect } from "react-redux";
 import { RootState } from "../../reducers/index";
 import { Dispatch } from "redux";
 import { UpdateRecords, UPDATE_RECORDS } from "../../actions/HomeAction";
 import { Filter } from "../../reducers/FilterReducer";
+import moment from "moment";
+import axios from "axios";
+import { URL } from "../../utils/constants";
+
+const BASE_URL = process.env.NODE_ENV === "production" ? URL.production : URL.dev;
 
 interface List {
   user?: User;
@@ -39,9 +43,10 @@ const dummySelected: Record = {
 };
 
 function RecordList({ user, records, filter, updateRecordsToRedux }: List) {
+  const currFilter = filter as Filter;
   const recordList = records || [];
   const currUser = user ? user : null;
-  const [data, setData] = useState<Record[]>(recordList);
+  const [data, setData] = useState<Record[]>([]);
   const [selected, setSelected] = useState<Record>(dummySelected);
 
   const [title, setTitle] = useState("");
@@ -52,70 +57,53 @@ function RecordList({ user, records, filter, updateRecordsToRedux }: List) {
   const [delID, setDelID] = useState("");
 
   useEffect(() => {
-    setData(recordList);
-  }, [records]);
-
-  useEffect(() => {
     setTitle(selected.title);
     setDescription(selected.description);
     setAmount(selected.amount);
     setRecordDate(selected.recordDate);
   }, [selected]);
 
+  // sort from latest to earliest
   const getSortData = (records: Record[]): Record[] => {
-    const sortedData = records.sort((a, b) => {
-      if (a.recordDate < b.recordDate) {
-        return 1;
-      }
-      return a.amount >= b.amount ? 1 : -1;
+    return records.sort((a, b) => {
+      return moment(a.recordDate).isBefore(moment(b.recordDate)) ? 1 : -1;
     });
-    return sortedData;
   };
 
   const generateRecords = (): void => {
-    let modifiedRecord: Record[] = [];
-    const enabled = filter?.enabled;
-    const month = filter?.month;
-    const category = filter?.category;
-    if (!enabled || (month === "" && category === "")) {
-      modifiedRecord = recordList;
-    } else {
-      if (month && category && month !== "" && category !== "") {
-        modifiedRecord = recordList.filter(
-          record =>
-            record.category === category && record.recordDate.slice(0, 7) === month
-        );
-      } else if (!month && !category) {
-        modifiedRecord = recordList;
-      } else if (month && month !== "") {
-        modifiedRecord = recordList.filter(
-          record => record.recordDate.slice(0, 7) === month
-        );
-      } else {
-        modifiedRecord = recordList.filter(record => record.category === category);
-      }
+    let list: Record[] = [];
+    const { month, enabled, category } = currFilter;
+    // when filter does not need to be activated
+    if (!enabled || (!month && !category)) {
+      list = getSortData(recordList);
+    } else if (month && category) {
+      list = recordList
+        .filter(record => record.recordDate.slice(0, 7) === month)
+        .filter(record => record.category === category);
+    } else if (month) {
+      list = recordList.filter(record => record.recordDate.slice(0, 7) === month);
+    } else if (category) {
+      list = recordList.filter(record => record.category === category);
     }
-    // caution: update state only at the top level
-    setData(getSortData(modifiedRecord));
+
+    setData(getSortData(list));
   };
 
   useEffect(() => {
     generateRecords();
-  }, [filter]);
+  }, [recordList, filter]);
 
   const updateAllRecordsToRedux = async (): Promise<void> => {
-    const response = await axios.get(`/api/getRecords/${currUser?._id}`);
+    const response = await axios.get(`${BASE_URL}/api/getRecords/${currUser?._id}`);
     const records: Record[] = response.data.records;
     if (updateRecordsToRedux) {
       updateRecordsToRedux(records);
-      console.log("updated");
     }
   };
 
   const onDeleteConfirm = async (recordID: string): Promise<void> => {
     const request = { data: { recordID } };
-    const response = await axios.delete("/api/deleteRecord", request);
-    console.log(response);
+    const response = await axios.delete(`${BASE_URL}/api/deleteRecord`, request);
     if (response.status === 202) {
       updateAllRecordsToRedux();
       message.success(response.data.message);
@@ -137,8 +125,8 @@ function RecordList({ user, records, filter, updateRecordsToRedux }: List) {
       message.warn("Please select a record date");
       return;
     }
-    if (amount === 0) {
-      message.warn("Amount must be greater than 0");
+    if (!amount) {
+      message.warn("Amount must be filled and it has to be greater than 0");
       return;
     }
 
@@ -151,7 +139,7 @@ function RecordList({ user, records, filter, updateRecordsToRedux }: List) {
         description: description || "No description",
       },
     };
-    const response = await axios.put("/api/updateRecord", request);
+    const response = await axios.put(`${BASE_URL}/api/updateRecord`, request);
 
     if (response.status === 200) {
       message.success(response.data.message);
@@ -167,45 +155,73 @@ function RecordList({ user, records, filter, updateRecordsToRedux }: List) {
       <List
         style={{ flex: 1 }}
         itemLayout="horizontal"
-        dataSource={getSortData(data)}
+        dataSource={data}
         renderItem={item => (
           <List.Item
             key={item._id}
-            actions={[
-              <EditOutlined
-                onClick={() => {
-                  handleEditBtnClick(item);
-                }}
-                style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
-                key="edit-item"
-              ></EditOutlined>,
-              <Button
-                disabled={selected._id !== item._id}
-                type="primary"
-                key="confirm-edit"
-                size="small"
-                onClick={handleConfirmEditBtnClick}
-              >
-                Confirm Edit
-              </Button>,
-              <Popconfirm
-                key="delete-item"
-                placement="topLeft"
-                title="Are you sure you want to delete this record?"
-                onConfirm={() => {
-                  onDeleteConfirm(item._id);
-                }}
-                okText="Yes"
-                cancelText="No"
-              >
-                <DeleteOutlined
-                  onClick={() => {
-                    setDelID(item._id);
-                  }}
-                  style={{ color: "#f5222d", cursor: "pointer" }}
-                ></DeleteOutlined>
-              </Popconfirm>,
-            ]}
+            actions={
+              selected._id === item._id
+                ? [
+                    <EditOutlined
+                      onClick={() => {
+                        handleEditBtnClick(item);
+                      }}
+                      style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
+                      key="edit-item"
+                    ></EditOutlined>,
+                    <Popconfirm
+                      key="delete-item"
+                      placement="topLeft"
+                      title="Are you sure you want to delete this record?"
+                      onConfirm={() => {
+                        onDeleteConfirm(delID);
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <DeleteOutlined
+                        onClick={() => {
+                          setDelID(item._id);
+                        }}
+                        style={{ color: "#f5222d", cursor: "pointer" }}
+                      ></DeleteOutlined>
+                    </Popconfirm>,
+                    <Button
+                      type="primary"
+                      key="confirm-edit"
+                      size="small"
+                      onClick={handleConfirmEditBtnClick}
+                    >
+                      Confirm Edit
+                    </Button>,
+                  ]
+                : [
+                    <EditOutlined
+                      onClick={() => {
+                        handleEditBtnClick(item);
+                      }}
+                      style={{ color: COLORS.THEMEBLUE, cursor: "pointer" }}
+                      key="edit-item"
+                    ></EditOutlined>,
+                    <Popconfirm
+                      key="delete-item"
+                      placement="topLeft"
+                      title="Are you sure you want to delete this record?"
+                      onConfirm={() => {
+                        onDeleteConfirm(delID);
+                      }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <DeleteOutlined
+                        onClick={() => {
+                          setDelID(item._id);
+                        }}
+                        style={{ color: "#f5222d", cursor: "pointer" }}
+                      ></DeleteOutlined>
+                    </Popconfirm>,
+                  ]
+            }
           >
             <ListItemMeta
               selected={selected}

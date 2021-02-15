@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 import styled from "styled-components";
 import SummaryBox from "./SummaryBox";
 import RecordList from "./RecordList";
@@ -40,22 +41,33 @@ interface ContentProps {
 function Content({ records }: ContentProps) {
   const { Content } = Layout;
 
-  const [expenseMonthly, setExpenseMonthly] = useState(0);
-  const [incomeMonthly, setIncomeMonthly] = useState(0);
+  const [expenseMonthly, setExpenseMonthly] = useState("");
+  const [incomeMonthly, setIncomeMonthly] = useState("");
 
   const getExpenseAndIncome = () => {
-    let expense = 0;
-    let income = 0;
-    const expenseRecords: Record[] = records
-      ? records.filter(record => record.type === "expense")
-      : [];
-    const incomeRecords: Record[] = records
-      ? records.filter(record => record.type === "income")
-      : [];
-    expenseRecords.map(records => (expense += records.amount));
-    incomeRecords.map(records => (income += records.amount));
-    setExpenseMonthly(expense);
-    setIncomeMonthly(income);
+    const expense = records
+      ? records
+          .filter(
+            record =>
+              record.type === "expense" &&
+              moment().isSame(record.recordDate, "month")
+          )
+          .map(record => record.amount)
+          .reduce((acc, curr) => acc + curr, 0)
+      : 0;
+
+    const income = records
+      ? records
+          .filter(
+            record =>
+              record.type === "income" && moment().isSame(record.recordDate, "month")
+          )
+          .map(record => record.amount)
+          .reduce((acc, curr) => acc + curr, 0)
+      : 0;
+
+    setExpenseMonthly(expense.toFixed(2));
+    setIncomeMonthly(income.toFixed(2));
   };
 
   useEffect(() => {

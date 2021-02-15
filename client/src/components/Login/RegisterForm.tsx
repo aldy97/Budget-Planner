@@ -7,6 +7,9 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { URL } from "../../utils/constants";
+
+const BASE_URL = process.env.NODE_ENV === "production" ? URL.production : URL.dev;
 
 interface RegisterFormProps {
   updateUserInfo: (user: User) => void;
@@ -46,8 +49,10 @@ function RegisterFrom({ updateUserInfo }: RegisterFormProps): JSX.Element {
       confirmPassword: confirmPassword,
       email: email,
     };
-    const response = await axios.post(`/api/register`, request);
-    if (response.data.result === "succ") {
+    const response = await axios.post(`${BASE_URL}/api/register`, request);
+    if (response.status === 200) {
+      const user = response.data.user;
+      updateUserInfo(user);
       message.success("Registration Success!");
       setIsRegistered(true);
     } else {

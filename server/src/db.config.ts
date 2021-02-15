@@ -1,5 +1,8 @@
 import mongoose, { Mongoose } from 'mongoose';
 import * as CONFIG from './util/constants';
+
+const DB_URL =
+  process.env.NODE_ENV === 'production' ? CONFIG.PRODUCTION_DB : CONFIG.MONGODB;
 /*
 remove deprecation warnings
 */
@@ -11,8 +14,9 @@ set up promise
 mongoose.Promise = global.Promise;
 
 const connect = (): Mongoose => {
+  console.log(`DB_URL: ${DB_URL}`);
   // connect to db
-  mongoose.connect(CONFIG.MONGODB, {
+  mongoose.connect(DB_URL, {
     useCreateIndex: true,
     useNewUrlParser: true,
     promiseLibrary: global.Promise,
